@@ -3,6 +3,8 @@ $(function(){
     let localStream = null;
     let peer = null;
     let existingCall = null;
+    let connection = null;
+    let dataConn = null;
     let audioSelect = $('#audioSource');
     let videoSelect = $('#videoSource');
 
@@ -64,10 +66,35 @@ $(function(){
         }
         const　call = peer.joinRoom(roomName, {mode: 'sfu', stream: localStream});
         setupCallEventHandlers(call);
+        connection = peer.connect(roomName);
     });
 
     $('#end-call').click(function(){
         existingCall.close();
+    });
+
+    $('#test').click(function(){
+        console.log("TEST TEST TEST");
+    });
+
+    $('#headup').click(function() {
+        console.log("up");
+        // dataConn.send("up");
+    });
+     
+    $('#headdown').click(function() {
+        console.log("down");
+        // dataConn.send("down");
+    });
+
+    $('#headleft').click(function() {
+        console.log("left");
+        // dataConn.send("left");
+    });
+     
+    $('#headright').click(function() {
+        console.log("right");
+        // dataConn.send("right");
     });
 
     peer.on('open', function(){
@@ -76,41 +103,26 @@ $(function(){
         $('#join-room').val(URLroom);
     });
 
+    // Not sure if this is redundant
     peer.on('connection', function (connection) {
+        console.log('in connection');
         dataConn = connection;
-        dataConn.on("data", onRecvMessage);
-        
-        
-        dataConn.on('data', function(message){
+        // dataConn.on("data", onRecvMessage);
+
+        connection.on('data', function(message){
+            console.log(message);
             $('#response').text(message);
         });
-        $("#send").click(function () {
-            var message = $("#message").val();
-            dataConn.send(message);
-        });
-         
-        $("#headup").click(function () {
-            console.log("up");
-            dataConn.send("up");
-        });
-         
-        $("#headdown").click(function () {
-            console.log("down");
-            dataConn.send("down");
-        });
-
-        $("#headleft").click(function () {
-            console.log("left");
-            dataConn.send("left");
-        });
-         
-        $("#headright").click(function () {
-            console.log("right");
-            dataConn.send("right");
-        });
-         
-    });
     
+        $('#send').click(function() {
+            var message = $("#message").val();
+            connection.send(message);
+        });
+    });
+
+    
+
+
 
     function setupGetUserMedia() {
         let audioSource = $('#audioSource').val();
