@@ -28,6 +28,21 @@ $(function(){
             return;
         });
 
+    /**
+     * Get the value of a querystring
+     * @param  {String} field The field to get the value of
+     * @param  {String} url   The URL to get the value from (optional)
+     * @return {String}       The field value
+     */
+    var getQueryString = function ( field, url ) {
+        var href = url ? url : window.location.href;
+        var reg = new RegExp( '[?&]' + field + '=([^&#]*)', 'i' );
+        var string = reg.exec(href);
+        return string ? string[1] : null;
+    };
+
+    var URLroom = getQueryString('room');
+
     peer = new Peer({
         key: '7df85c95-5208-405f-95a4-bd5e1f566321',
         debug: 3
@@ -56,7 +71,9 @@ $(function(){
     });
 
     peer.on('open', function(){
-        console.log('open');
+        console.log('open: ' + peer.id);
+        console.log('from URL: ' + URLroom);
+        $('#join-room').val(URLroom);
     });
 
     peer.on('connection', function (connection) {
@@ -73,17 +90,22 @@ $(function(){
         });
          
         $("#headup").click(function () {
+            console.log("up");
             dataConn.send("up");
         });
          
         $("#headdown").click(function () {
+            console.log("down");
             dataConn.send("down");
         });
+
         $("#headleft").click(function () {
+            console.log("left");
             dataConn.send("left");
         });
          
         $("#headright").click(function () {
+            console.log("right");
             dataConn.send("right");
         });
          
@@ -178,3 +200,4 @@ $(function(){
     }
 
 });
+
