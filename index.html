@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head lang="ja">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>SkyWay ELSA</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="https://cdn.webrtc.ecl.ntt.com/skyway-latest.js"></script>
+    <script type="text/javascript" src="script.js"></script>
+</head>
+<body>
+    <nav class="navbar-navbar-expand-sm" style="background-color:#212AE8">
+        <a class="navbar-brand" href="">
+            <img style="height:100px" src="ELSA-logos_white.png">
+        </a>
+    </nav>
+
+
+<div class="videosContainer">
+    <video id="myStream" autoplay muted="true"></video>
+</div>
+
+<div class="myControllerContainer">
+    <p>Your id: <span id="my-id">...</span></p>
+    <div class="select">
+        <label for="audioSource">Audio input source: </label><select id="audioSource"></select>
+    </div>
+    <div class="select">
+        <label for="videoSource">Video source: </label><select id="videoSource"></select>
+    </div>
+    <form id="make-call">
+        <input type="text" placeholder="Join room..." id="join-room">
+        <button type="submit">Join</button>
+    </form>
+    <div id="end-call">
+        <p>Currently in room <span id="room-id">...</span></p>
+        <button>Leave</button>
+    </div>
+    <div id="send-message">
+        <p><div id="response">Data</div></p>	
+        <p><input type="text" placeholder="Message" id="message">&nbsp;<button type="button" id="send">Send</button></p>
+    </div>
+    <p><button type="button" id="headup">UP</button>
+    <button type="button" id="headdown">DOWN</button></p>
+    <p><button type="button" id="headleft">LEFT</button>
+    <button type="button" id="headright">RIGHT</button></p>
+    
+
+</div>
+
+</body>
+</html>
