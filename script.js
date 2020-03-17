@@ -1,15 +1,19 @@
-$(function(){
+$(function () {
 
     let localStream = null;
     let peer = null;
     let existingCall = null;
     let connection = null;
-    let dataConn = null;
+    // let closeTrigger = $('#leave');
+    let closeTrigger = document.getElementById('leave');
+    let sendTrigger = document.getElementById('send');
+    let localText = $('#message');
+    let messages = $('#response');
     let audioSelect = $('#audioSource');
     let videoSelect = $('#videoSource');
 
     navigator.mediaDevices.enumerateDevices()
-        .then(function(deviceInfos) {
+        .then(function (deviceInfos) {
             for (let i = 0; i !== deviceInfos.length; ++i) {
                 let deviceInfo = deviceInfos[i];
                 let option = $('<option>');
@@ -30,19 +34,15 @@ $(function(){
             return;
         });
 
-    /**
-     * Get the value of a querystring
-     * @param  {String} field The field to get the value of
-     * @param  {String} url   The URL to get the value from (optional)
-     * @return {String}       The field value
-     */
-    var getQueryString = function ( field, url ) {
+    // Gets URL parameter
+    var getQueryString = function (field, url) {
         var href = url ? url : window.location.href;
-        var reg = new RegExp( '[?&]' + field + '=([^&#]*)', 'i' );
+        var reg = new RegExp('[?&]' + field + '=([^&#]*)', 'i');
         var string = reg.exec(href);
         return string ? string[1] : null;
     };
 
+    // Get room ID from URL
     var URLroom = getQueryString('room');
 
     peer = new Peer({
@@ -50,77 +50,139 @@ $(function(){
         debug: 3
     });
 
-    peer.on('open', function(){
+    peer.on('open', function () {
         $('#my-id').text(peer.id);
     });
 
-    peer.on('error', function(err){
+    peer.on('error', function (err) {
         alert(err.message);
     });
 
-    $('#make-call').submit(function(e){
+    // When 'Join' is clicked
+    // Register connecter handler
+    $('#make-call').submit(function (e) {
         e.preventDefault();
         let roomName = $('#join-room').val();
         if (!roomName) {
             return;
         }
-        const　call = peer.joinRoom(roomName, {mode: 'sfu', stream: localStream});
+        const call = peer.joinRoom(roomName, {
+            mode: 'sfu',
+            stream: localStream
+        });
         setupCallEventHandlers(call);
         connection = peer.connect(roomName);
+
+        connection.once('open', async () => {
+            messages.textContent += '=== DataConnection has been opened ===\n';
+            sendTrigger.addEventListener('click', onClickSend);
+        });
+
+        connection.on('data', data => {
+            messages.textContent += 'Remote: ${data}\n';
+        });
+
+        connection.once('close', () => {
+            messages.textContent += '=== DataConnection has been closed ===\n';
+            sendTrigger.removeEventListener('click', onClickSend);
+        });
+
+        // Register closing handler
+        closeTrigger.addEventListener('click', () => connection.close(), {
+            once: true,
+        });
+
+        function onClickSend() {
+            const data = localText.value;
+            console.log(data);
+            connection.send(data);
+
+            messages.textContent += 'You: ${data}\n';
+            localText.value = '';
+        }
     });
 
-    $('#end-call').click(function(){
+    $('#end-call').click(function () {
         existingCall.close();
     });
 
-    $('#test').click(function(){
+    $('#test').click(function () {
         console.log("TEST TEST TEST");
     });
 
-    $('#headup').click(function() {
+    $('#headup').click(function () {
         console.log("up");
         // dataConn.send("up");
     });
-     
-    $('#headdown').click(function() {
+
+    $('#headdown').click(function () {
         console.log("down");
         // dataConn.send("down");
     });
 
-    $('#headleft').click(function() {
+    $('#headleft').click(function () {
         console.log("left");
         // dataConn.send("left");
     });
-     
-    $('#headright').click(function() {
+
+    $('#headright').click(function () {
         console.log("right");
         // dataConn.send("right");
     });
 
-    peer.on('open', function(){
+    peer.on('open', function () {
         console.log('open: ' + peer.id);
         console.log('from URL: ' + URLroom);
         $('#join-room').val(URLroom);
     });
 
-    // Not sure if this is redundant
+    // needed?
+    // peer.once('open', id => (localId.textContent = id));
+
+
+    // Register connected peer handler
     peer.on('connection', function (connection) {
         console.log('in connection');
-        dataConn = connection;
-        // dataConn.on("data", onRecvMessage);
 
-        connection.on('data', function(message){
-            console.log(message);
-            $('#response').text(message);
+        // connection.on('data', function (message) {
+        //     console.log(message);
+        //     $('#response').text(message);
+        // });
+
+        // $('#send').click(function () {
+        //     var message = $("#message").val();
+        //     connection.send(message);
+        // });
+
+        connection.once('open', async () => {
+            messages.textContent += '=== DataConnection has been opened ===\n';
+            sendTrigger.addEventListener('click', onClickSend);
         });
-    
-        $('#send').click(function() {
-            var message = $("#message").val();
-            connection.send(message);
+
+        connection.on('data', data => {
+            messages.textContent += 'Remote: ${data}\n';
         });
+
+        connection.once('close', () => {
+            messages.textContent += '=== DataConnection has been closed ===\n';
+            sendTrigger.removeEventListener('click', onClickSend);
+        });
+
+        // Register closing handler
+        closeTrigger.addEventListener('click', () => connection.close(), {
+            once: true,
+        });
+
+        function onClickSend() {
+            const data = localText.value;
+            console.log(data);
+            connection.send(data);
+
+            messages.textContent += 'You: ${data}\n';
+            localText.value = '';
+        }
     });
 
-    
 
 
 
@@ -128,8 +190,16 @@ $(function(){
         let audioSource = $('#audioSource').val();
         let videoSource = $('#videoSource').val();
         let constraints = {
-            audio: {deviceId: {exact: audioSource}},
-            video: {deviceId: {exact: videoSource}}
+            audio: {
+                deviceId: {
+                    exact: audioSource
+                }
+            },
+            video: {
+                deviceId: {
+                    exact: videoSource
+                }
+            }
         };
         constraints.video.width = {
             min: 320,
@@ -137,10 +207,10 @@ $(function(){
         };
         constraints.video.height = {
             min: 240,
-            max: 240        
+            max: 240
         };
 
-        if(localStream){
+        if (localStream) {
             localStream = null;
         }
 
@@ -149,7 +219,7 @@ $(function(){
                 $('#myStream').get(0).srcObject = stream;
                 localStream = stream;
 
-                if(existingCall){
+                if (existingCall) {
                     existingCall.replaceStream(stream);
                 }
 
@@ -159,7 +229,7 @@ $(function(){
             });
     }
 
-    function setupCallEventHandlers(call){
+    function setupCallEventHandlers(call) {
         if (existingCall) {
             existingCall.close();
         };
@@ -168,40 +238,40 @@ $(function(){
         setupEndCallUI();
         $('#room-id').text(call.name);
 
-        call.on('stream', function(stream){
+        call.on('stream', function (stream) {
             addVideo(stream);
         });
 
-        call.on('removeStream', function(stream){
+        call.on('removeStream', function (stream) {
             removeVideo(stream.peerId);
         });
 
-        call.on('peerLeave', function(peerId){
+        call.on('peerLeave', function (peerId) {
             removeVideo(peerId);
         });
 
-        call.on('close', function(){
+        call.on('close', function () {
             removeAllRemoteVideos();
             setupMakeCallUI();
         });
     }
 
-    function addVideo(stream){
+    function addVideo(stream) {
         const videoDom = $('<video autoplay>');
-        videoDom.attr('id',stream.peerId);
+        videoDom.attr('id', stream.peerId);
         videoDom.get(0).srcObject = stream;
         $('.videosContainer').append(videoDom);
     }
 
-    function removeVideo(peerId){
-        $('#'+peerId).remove();
+    function removeVideo(peerId) {
+        $('#' + peerId).remove();
     }
 
-    function removeAllRemoteVideos(){
+    function removeAllRemoteVideos() {
         $('.videosContainer').empty();
     }
 
-    function setupMakeCallUI(){
+    function setupMakeCallUI() {
         $('#make-call').show();
         $('#end-call').hide();
     }
@@ -212,4 +282,3 @@ $(function(){
     }
 
 });
-
