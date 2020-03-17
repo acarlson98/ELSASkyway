@@ -4,11 +4,10 @@ $(function () {
     let peer = null;
     let existingCall = null;
     let connection = null;
-    // let closeTrigger = $('#leave');
     let closeTrigger = document.getElementById('leave');
     let sendTrigger = document.getElementById('send');
-    let localText = $('#message');
-    let messages = $('#response');
+    let localText = document.getElementById('message');
+    let messages = document.getElementById('response');
     let audioSelect = $('#audioSource');
     let videoSelect = $('#videoSource');
 
@@ -74,16 +73,16 @@ $(function () {
         connection = peer.connect(roomName);
 
         connection.once('open', async () => {
-            messages.textContent += '=== DataConnection has been opened ===\n';
+            messages.textContent += `=== DataConnection has been opened ===\n`;
             sendTrigger.addEventListener('click', onClickSend);
         });
 
         connection.on('data', data => {
-            messages.textContent += 'Remote: ${data}\n';
+            messages.textContent += `Remote: ${data}\n`;
         });
 
         connection.once('close', () => {
-            messages.textContent += '=== DataConnection has been closed ===\n';
+            messages.textContent += `=== DataConnection has been closed ===\n`;
             sendTrigger.removeEventListener('click', onClickSend);
         });
 
@@ -97,7 +96,7 @@ $(function () {
             console.log(data);
             connection.send(data);
 
-            messages.textContent += 'You: ${data}\n';
+            messages.textContent += `You: ${data}\n`;
             localText.value = '';
         }
     });
@@ -155,16 +154,16 @@ $(function () {
         // });
 
         connection.once('open', async () => {
-            messages.textContent += '=== DataConnection has been opened ===\n';
+            messages.textContent += `=== DataConnection has been opened ===\n`;
             sendTrigger.addEventListener('click', onClickSend);
         });
 
         connection.on('data', data => {
-            messages.textContent += 'Remote: ${data}\n';
+            messages.textContent += `Remote: ${data}\n`;
         });
 
         connection.once('close', () => {
-            messages.textContent += '=== DataConnection has been closed ===\n';
+            messages.textContent += `=== DataConnection has been closed ===\n`;
             sendTrigger.removeEventListener('click', onClickSend);
         });
 
@@ -178,7 +177,7 @@ $(function () {
             console.log(data);
             connection.send(data);
 
-            messages.textContent += 'You: ${data}\n';
+            messages.textContent += `You: ${data}\n`;
             localText.value = '';
         }
     });
