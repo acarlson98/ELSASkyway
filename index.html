@@ -5,7 +5,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>SkyWay ELSA</title>
     <link rel="stylesheet" href="style.css">
-    <!-- <script type="text/javascript" src="//code.jquery.com/jquery-2.1.1.min.js"></script> -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
@@ -18,8 +17,6 @@
     <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"> -->
     <!-- Bootstrap JS -->
     <!-- <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script> -->
-
-    <!-- https://www.unoteam5.com/?room=5vmTbJPsX4URxAgM -->
 </head>
 
 <body>
@@ -35,13 +32,14 @@
     </div>
 
     <div class="myControllerContainer">
-        <p>Send someone else this link: www.unoteam5.com?room=<span id="my-id">...</span></p>
         <div class="select">
             <label for="audioSource">Audio input source: </label><select id="audioSource"></select>
         </div>
         <div class="select">
             <label for="videoSource">Video source: </label><select id="videoSource"></select>
         </div>
+        <button id="host">Host Room</button>
+        <p id="hostLink" style="display:none">Send someone else this link: www.unoteam5.com?room=<span id="my-id">...</span></p>
         <form id="make-call">
             <input type="text" placeholder="Join room..." id="join-room">
             <button type="submit">Join</button>
@@ -58,8 +56,6 @@
             <p><input type="text" placeholder="Message" id="message">&nbsp;<button type="button" id="send">Send</button>
             </p>
         </div>
-
-        <button id="test">TEST</button>
 
         <button id="headup">UP</button>
         <button id="headdown">DOWN</button>

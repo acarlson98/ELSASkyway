@@ -49,8 +49,17 @@ $(function () {
         debug: 3
     });
 
-    peer.on('open', function () {
+    // peer.on('open', function () {
+    //     $('#my-id').text(peer.id);
+    // });
+
+    // When host button is clicked
+    $('#host').click(function () {
+        $('#host').hide();
+        $('#hostLink').show();
         $('#my-id').text(peer.id);
+
+        $('#join-room').val(peer.id);
     });
 
     peer.on('error', function (err) {
@@ -105,10 +114,6 @@ $(function () {
         existingCall.close();
     });
 
-    $('#test').click(function () {
-        console.log("TEST TEST TEST");
-    });
-
     $('#headup').click(function () {
         console.log("up");
         // dataConn.send("up");
@@ -138,20 +143,9 @@ $(function () {
     // needed?
     // peer.once('open', id => (localId.textContent = id));
 
-
     // Register connected peer handler
     peer.on('connection', function (connection) {
         console.log('in connection');
-
-        // connection.on('data', function (message) {
-        //     console.log(message);
-        //     $('#response').text(message);
-        // });
-
-        // $('#send').click(function () {
-        //     var message = $("#message").val();
-        //     connection.send(message);
-        // });
 
         connection.once('open', async () => {
             messages.textContent += `=== DataConnection has been opened ===\n`;
@@ -181,9 +175,6 @@ $(function () {
             localText.value = '';
         }
     });
-
-
-
 
     function setupGetUserMedia() {
         let audioSource = $('#audioSource').val();
@@ -279,5 +270,4 @@ $(function () {
         $('#make-call').hide();
         $('#end-call').show();
     }
-
 });
