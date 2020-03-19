@@ -153,7 +153,16 @@ $(function () {
         });
 
         connection.on('data', data => {
-            messages.textContent += `Remote: ${data}\n`;
+            if(data == "on"){
+                ledOn();
+                messages.textContent += `Movement Remote: ${data}\n`;
+            } else if (data == "off"){
+                ledOff();
+                messages.textContent += `Movement Remote: ${data}\n`;
+            }
+            else{
+                messages.textContent += `Remote: ${data}\n`;
+            }
         });
 
         connection.once('close', () => {
