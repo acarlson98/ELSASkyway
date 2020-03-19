@@ -87,7 +87,18 @@ $(function () {
         });
 
         connection.on('data', data => {
-            messages.textContent += `Remote: ${data}\n`;
+            console.log("Self Handler: ");
+            console.log(data);
+            if(data == "on"){
+                ledon();
+                messages.textContent += `Movement Remote: ${data}\n`;
+            } else if (data == "off"){
+                ledoff();
+                messages.textContent += `Movement Remote: ${data}\n`;
+            }
+            else{
+                messages.textContent += `Remote: ${data}\n`;
+            }
         });
 
         connection.once('close', () => {
@@ -153,11 +164,13 @@ $(function () {
         });
 
         connection.on('data', data => {
+            console.log("Peer Handler: ");
+            console.log(data);
             if(data == "on"){
-                ledOn();
+                ledon();
                 messages.textContent += `Movement Remote: ${data}\n`;
             } else if (data == "off"){
-                ledOff();
+                ledoff();
                 messages.textContent += `Movement Remote: ${data}\n`;
             }
             else{
