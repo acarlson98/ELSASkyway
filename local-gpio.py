@@ -9,30 +9,38 @@ def on_connect(client, userdata, flag, rc):
 def on_message(client, userdata, msg):
      print(msg.topic+" "+str(msg.payload))
      GPIO.output(21,1)
+     GPIO.output(20,1)
+     GPIO.output(16,1)
+     GPIO.output(12,1)
 
-    if msg.payload == "up":
-        # red light on
+    # 21 = red
+    # 20 = yellow
+    # 16 = blue
+    # 12 = green
+
+     if msg.payload == "up":
          GPIO.output(21,1)
-        # yellow light on
-         GPIO.output(20,1)
+         GPIO.output(20,0)
+         GPIO.output(16,0)
+         GPIO.output(12,0)
          print("up")
-    if msg.payload == "down":
-        # red light off
+     if msg.payload == "down":
          GPIO.output(21,0)
-        # yellow light on
          GPIO.output(20,1)
+         GPIO.output(16,0)
+         GPIO.output(12,0)
          print("down")
-    if msg.payload == "left":
-        # red light on
-         GPIO.output(21,1)
-        # yellow light off
-         GPIO.output(20,0)
-         print("left")
-    if msg.payload == "right":
-        # red light off
+     if msg.payload == "left":
          GPIO.output(21,0)
-        # yellow light off
          GPIO.output(20,0)
+         GPIO.output(16,1)
+         GPIO.output(12,0)
+         print("left")
+     if msg.payload == "right":
+         GPIO.output(21,0)
+         GPIO.output(20,0)
+         GPIO.output(16,0)
+         GPIO.output(12,1)
          print("right")
  
 def on_disconnect():
@@ -40,6 +48,9 @@ def on_disconnect():
  
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(21, GPIO.OUT)
+GPIO.setup(20, GPIO.OUT)
+GPIO.setup(16, GPIO.OUT)
+GPIO.setup(12, GPIO.OUT)
  
 client = mqtt.Client()
 client.on_connect = on_connect
