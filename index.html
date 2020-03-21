@@ -11,12 +11,10 @@
     <script type="text/javascript" src="https://cdn.webrtc.ecl.ntt.com/skyway-latest.js"></script>
     <script type="text/javascript" src="script.js"></script>
 
-    <!-- Bundled Bootstrap -->
-    <!-- <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script> -->
+    <!-- Bundled Bootstrap (includes Popper) -->
+    <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
     <!-- Bootstrap CSS -->
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"> -->
-    <!-- Bootstrap JS -->
-    <!-- <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script> -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 
     <!-- Script for communicating with local device MQTT server for movement instructions -->
     <script type="text/javascript">
@@ -49,18 +47,32 @@
 
         function onFailure() {}
 
-        function ledon() {
-            message = new Paho.MQTT.Message("on");
+        function up() {
+            message = new Paho.MQTT.Message("up");
             message.destinationName = "isyjp/gpio21";
             mqtt.send(message);
-            console.log("led on.");
+            console.log("up tilt");
         }
 
-        function ledoff() {
-            message = new Paho.MQTT.Message("off");
+        function down() {
+            message = new Paho.MQTT.Message("down");
             message.destinationName = "isyjp/gpio21";
             mqtt.send(message);
-            console.log("led off.");
+            console.log("down tilt");
+        }
+
+        function left() {
+            message = new Paho.MQTT.Message("left");
+            message.destinationName = "isyjp/gpio21";
+            mqtt.send(message);
+            console.log("left turn");
+        }
+
+        function right() {
+            message = new Paho.MQTT.Message("right");
+            message.destinationName = "isyjp/gpio21";
+            mqtt.send(message);
+            console.log("right turn");
         }
     </script>
 
@@ -105,13 +117,13 @@
             </p>
         </div>
 
-        <button id="headup">UP</button>
-        <button id="headdown">DOWN</button>
-        <button id="headleft">LEFT</button>
-        <button id="headright">RIGHT</button>
+        <button onclick="up()" id="headup">UP</button>
+        <button onclick="down()" id="headdown">DOWN</button>
+        <button onclick="left()" id="headleft">LEFT</button>
+        <button onclick="right()" id="headright">RIGHT</button>
 
-        <p><button type="button" onclick="ledon()">LED On</button></p>
-        <p><button type="button" onclick="ledoff()">LED Off</button></p>
+        <!-- <p><button type="button" onclick="up()">LED On</button></p>
+        <p><button type="button" onclick="down()">LED Off</button></p> -->
 
 
     </div>

@@ -89,11 +89,17 @@ $(function () {
         connection.on('data', data => {
             console.log("Self Handler: ");
             console.log(data);
-            if(data == "on"){
-                ledon();
+            if(data == "up"){
+                up();
                 messages.textContent += `Movement Remote: ${data}\n`;
-            } else if (data == "off"){
-                ledoff();
+            } else if (data == "down"){
+                down();
+                messages.textContent += `Movement Remote: ${data}\n`;
+            } else if(data == "left"){
+                left();
+                messages.textContent += `Movement Remote: ${data}\n`;
+            } else if (data == "right"){
+                right();
                 messages.textContent += `Movement Remote: ${data}\n`;
             }
             else{
@@ -166,11 +172,17 @@ $(function () {
         connection.on('data', data => {
             console.log("Peer Handler: ");
             console.log(data);
-            if(data == "on"){
-                ledon();
+            if(data == "up"){
+                up();
                 messages.textContent += `Movement Remote: ${data}\n`;
-            } else if (data == "off"){
-                ledoff();
+            } else if (data == "down"){
+                down();
+                messages.textContent += `Movement Remote: ${data}\n`;
+            } else if(data == "left"){
+                left();
+                messages.textContent += `Movement Remote: ${data}\n`;
+            } else if (data == "right"){
+                right();
                 messages.textContent += `Movement Remote: ${data}\n`;
             }
             else{
