@@ -1,10 +1,10 @@
-html {
+/* html {
     background: #000 no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-}
+} */
 
 nav {
     border-bottom: 1px solid #212AE8;
@@ -21,14 +21,14 @@ nav {
 }
 
 .myControllerContainer {
-    position: absolute;
+    /* position: absolute; */
     background: rgb(0, 0, 0);
     /* Fallback color */
     background: rgba(0, 0, 0, 0.5);
     /* Black background with 0.5 opacity */
-    width: 50%;
-    height: 50%;
-    top: 50%;
+    /* width: 50%; */
+    /* height: 50%; */
+    /* top: 50%; */
     padding-left: 20px;
     color: white
 }
@@ -83,7 +83,7 @@ select {
     outline: none;
 }
 
-button {
+/* button {
     font-size: 15px;
     font-weight: bold;
     padding: 6px 20px;
@@ -93,17 +93,22 @@ button {
     background: -webkit-gradient(linear, left bottom, left top, from(#36d), color-stop(0.5, #248), to(#36d));
     border-radius: 5px;
     width: 120px;
-}
+} */
 
 button:hover {
     opacity: 0.8;
 }
+
+/* pre {
+    color: white !important;
+} */
 
 video {
     background: black;
     float: left;
 }
 
+/* These are affected by there being no videosContainer anymore */
 .videosContainer video {
     height: 100%;
 }
