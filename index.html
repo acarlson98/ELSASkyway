@@ -28,7 +28,7 @@
 
         $(function () {
             mqtt = new Paho.MQTT.Client("localhost", 9090, "cli01");
-            console.log("conncting");
+            console.log("connecting");
 
             var options = {
                 timeout: 60,
@@ -113,30 +113,36 @@
     </nav>
 
     <div class="container">
-        <!-- <div class="row"> -->
-            <div class="row" id="videosContainer">
-                <video id="myStream" autoplay muted="true"></video>
-            </div>
-        <!-- </div> -->
+        <div class="row" id="videosContainer">
+            <video id="myStream" autoplay muted="true"></video>
+        </div>
 
         <div class="row">
-            <div class="select">
+            <div class="col-12">
                 <label for="audioSource">Audio input source: </label><select id="audioSource"></select>
             </div>
-            <div class="select">
+            <div class="col-12">
                 <label for="videoSource">Video source: </label><select id="videoSource"></select>
             </div>
+        </div>
+        <div class="row">
             <button id="host">Host Room</button>
             <p id="hostLink" style="display:none">Send someone else this link: www.unoteam5.com?room=<span
                     id="my-id">...</span></p>
+        </div>
+        <div class="row">
             <form id="make-call">
                 <input type="text" placeholder="Join room..." id="join-room">
                 <button type="submit">Join</button>
             </form>
+        </div>
+        <div class="row">
             <div id="end-call">
                 <p>Currently in room <span id="room-id">...</span></p>
                 <button id="leave">Leave</button>
             </div>
+        </div>
+        <div class="row">
             <div id="send-message">
                 <p>
                     <!-- needs to be a pre so that it honors new line chars -->
@@ -146,43 +152,46 @@
                         id="send">Send</button>
                 </p>
             </div>
+        </div>
 
-            <div class="row">
+        <div class="row">
+            <div class="col-6">
                 <button onclick="up()" id="headup">UP</button>
                 <button onclick="down()" id="headdown">DOWN</button>
                 <button onclick="left()" id="headleft">LEFT</button>
                 <button onclick="right()" id="headright">RIGHT</button>
             </div>
 
-            <!-- Settings modal -->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                Settings
-            </button>
+            <div class="col-6">
+                <!-- Settings modal -->
+                <button type="button" class="btn btn-primary float-right" data-toggle="modal"
+                    data-target="#exampleModal">
+                    Settings
+                </button>
 
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Settings</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            ...
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Settings</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                ...
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
 </body>
 
 </html>
