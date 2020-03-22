@@ -113,11 +113,11 @@
     </nav>
 
     <div class="container">
-        <div class="row" id="videosContainer">
+        <div class="row p-1" id="videosContainer">
             <video id="myStream" autoplay muted="true"></video>
         </div>
 
-        <div class="row">
+        <div class="row p-1">
             <div class="col-12">
                 <label for="audioSource">Audio input source: </label><select id="audioSource"></select>
             </div>
@@ -125,41 +125,45 @@
                 <label for="videoSource">Video source: </label><select id="videoSource"></select>
             </div>
         </div>
+
         <div class="row">
-            <button id="host">Host Room</button>
+            <button class="btn btn-secondary" id="host">Host Room</button>
             <p id="hostLink" style="display:none">Send someone else this link: www.unoteam5.com?room=<span
                     id="my-id">...</span></p>
         </div>
+
         <div class="row">
             <form id="make-call">
                 <input type="text" placeholder="Join room..." id="join-room">
-                <button type="submit">Join</button>
+                <button class="btn btn-primary" type="submit">Join</button>
             </form>
         </div>
+
         <div class="row">
             <div id="end-call">
                 <p>Currently in room <span id="room-id">...</span></p>
                 <button id="leave">Leave</button>
             </div>
         </div>
+
         <div class="row">
             <div id="send-message">
                 <p>
                     <!-- needs to be a pre so that it honors new line chars -->
                     <pre id="response"></pre>
                 </p>
-                <p><input type="text" placeholder="Message" id="message">&nbsp;<button type="button"
-                        id="send">Send</button>
+                <p><input type="text" placeholder="Message" id="message">&nbsp;<button class="btn btn-primary"
+                        type="button" id="send">Send</button>
                 </p>
             </div>
         </div>
 
         <div class="row">
             <div class="col-6">
-                <button onclick="up()" id="headup">UP</button>
-                <button onclick="down()" id="headdown">DOWN</button>
-                <button onclick="left()" id="headleft">LEFT</button>
-                <button onclick="right()" id="headright">RIGHT</button>
+                <button class="btn btn-secondary" onclick="up()" id="headup">UP</button>
+                <button class="btn btn-secondary" onclick="down()" id="headdown">DOWN</button>
+                <button class="btn btn-secondary" onclick="left()" id="headleft">LEFT</button>
+                <button class="btn btn-secondary" onclick="right()" id="headright">RIGHT</button>
             </div>
 
             <div class="col-6">
@@ -181,7 +185,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                ...
+                                Put settings here
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -190,8 +194,11 @@
                         </div>
                     </div>
                 </div>
+
             </div>
+            
         </div>
+
 </body>
 
 </html>
