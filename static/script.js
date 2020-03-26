@@ -60,6 +60,22 @@ $(function () {
         $('#my-id').text(peer.id);
 
         $('#join-room').val(peer.id);
+
+        
+        // Send LINE message with room URL
+        // var data = {
+        //     "Content-Type" : "application/json",
+        //     "Authorization" : "Bearer rK1l5F+em4UBIwIx5ZooYIgpaesvVO4KdCRol150ecy4O6wIFwV3q0Ds2xV3GXj95Kcb/eu+sNX3nRcO+cFll0hMXbL1aDw9f8zWS1UeskkqY+YxcdZb+YosmS81zlCuEW1S60GfRLd+J0bH4js10wdB04t89/1O/w1cDnyilFU=",
+        //     "to" : "",
+        //     "messages" : 
+        //         {
+        //             "type" : "text",
+        //             "text" : "Test Message"
+        //         }
+        //     };
+        // $.post('https://api.line.me/v2/bot/message/push', data, function(data, status){
+        //     console.log(`${data} and status is ${status}`);
+        // });
     });
 
     peer.on('error', function (err) {
