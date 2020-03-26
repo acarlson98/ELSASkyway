@@ -1,39 +1,32 @@
-html {
-    background: #000 no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;  }
-
 nav {
-border-bottom: 1px solid #212AE8;
-z-index: 1;
-top: 10; }
+    border-bottom: 1px solid #212AE8;
+    z-index: 1;
+    top: 10;
 }
+
 .videosContainer {
     position: absolute;
     width: 50%;
     height: 50%;
     left: 0;
-    top: 100; }
+    top: 100;
+}
 
 .myControllerContainer {
-    position: absolute;
-    background: rgb(0, 0, 0); /* Fallback color */
-    background: rgba(0, 0, 0, 0.5); /* Black background with 0.5 opacity */
-    width: 50%;
-    height: 50%;
-    top: 50%;
+    /* position: absolute; */
+    background: rgb(0, 0, 0);
+    /* Fallback color */
+    background: rgba(0, 0, 0, 0.5);
+    /* Black background with 0.5 opacity */
+    /* width: 50%; */
+    /* height: 50%; */
+    /* top: 50%; */
     padding-left: 20px;
-    color: white}
+    color: white
+}
 
 #my-id {
     font-weight: bold;
-}
-
-.select {
-    margin-top: 1em;
-    margin-bottom: 1em;
 }
 
 form {
@@ -41,7 +34,8 @@ form {
     margin-bottom: 1em;
 }
 
-div #recording, div #end-call {
+div #recording,
+div #end-call {
     margin-top: 1em;
     margin-bottom: 1em;
 }
@@ -53,28 +47,34 @@ div #recording, div #end-call {
 #recording {
     display: none;
 }
+
 #downloadlink {
     display: none;
 }
 
-input[type=text]{
+.navbar-toggler {
+    background-color: lightblue;
+}
+
+input[type=text] {
     border-radius: 5px;
-    border:#a9a9a9 1px solid;
-    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2),0 0 2px rgba(0,0,0,0.3);
-    width:40%;
+    border: #a9a9a9 1px solid;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2), 0 0 2px rgba(0, 0, 0, 0.3);
+    width: 40%;
     font-size: 15px;
     padding: 5px;
 }
 
 input[type=text]:focus {
-    border:solid 1px #20b2aa;
+    border: solid 1px #20b2aa;
 }
 
-input[type=text], select {
+input[type=text],
+select {
     outline: none;
 }
 
-button {
+/* button {
     font-size: 15px;
     font-weight: bold;
     padding: 6px 20px;
@@ -84,58 +84,62 @@ button {
     background: -webkit-gradient(linear, left bottom, left top, from(#36d), color-stop(0.5, #248), to(#36d));
     border-radius: 5px;
     width: 120px;
-}
+} */
 
 button:hover {
-    /* 透明度を20%に指定 */
     opacity: 0.8;
 }
+
+/* pre {
+    color: white !important;
+} */
 
 video {
     background: black;
     float: left;
 }
 
+/* These are affected by there being no videosContainer anymore */
 .videosContainer video {
     height: 100%;
 }
 
 .videosContainer video:first-child:nth-last-child(1),
-.videosContainer video:first-child:nth-last-child(1) ~ video {
+.videosContainer video:first-child:nth-last-child(1)~video {
     width: 100%;
 }
 
 .videosContainer video:first-child:nth-last-child(2),
-.videosContainer video:first-child:nth-last-child(2) ~ video {
+.videosContainer video:first-child:nth-last-child(2)~video {
     width: 50%;
 }
 
 .videosContainer video:first-child:nth-last-child(3),
-.videosContainer video:first-child:nth-last-child(3) ~ video {
+.videosContainer video:first-child:nth-last-child(3)~video {
     width: 33.33333%;
 }
 
 .videosContainer video:first-child:nth-last-child(4),
-.videosContainer video:first-child:nth-last-child(4) ~ video {
+.videosContainer video:first-child:nth-last-child(4)~video {
     width: 25%;
 }
 
 .videosContainer video:first-child:nth-last-child(5),
-.videosContainer video:first-child:nth-last-child(5) ~ video {
+.videosContainer video:first-child:nth-last-child(5)~video {
     width: 20%;
 }
 
 .videosContainer video:first-child:nth-last-child(6),
-.videosContainer video:first-child:nth-last-child(6) ~ video {
+.videosContainer video:first-child:nth-last-child(6)~video {
     width: 16.66667%;
 }
 
 .videosContainer video:first-child:nth-last-child(7),
-.videosContainer video:first-child:nth-last-child(7) ~ video {
+.videosContainer video:first-child:nth-last-child(7)~video {
     width: 14.28571%;
 }
 
 .videosContainer video:first-child:nth-last-child(8),
-.videosContainer video:first-child:nth-last-child(8) ~ video {
+.videosContainer video:first-child:nth-last-child(8)~video {
     width: 12.5%;
 }
