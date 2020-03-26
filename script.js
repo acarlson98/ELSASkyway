@@ -284,15 +284,17 @@ $(function () {
         const videoDom = $('<video autoplay>');
         videoDom.attr('id', stream.peerId);
         videoDom.get(0).srcObject = stream;
-        $('.videosContainer').append(videoDom);
+        $('#videosContainer').append(videoDom);
     }
 
     function removeVideo(peerId) {
         $('#' + peerId).remove();
     }
 
+    // This removes all videos
+    // TODO: Make it only remove the remote videos?
     function removeAllRemoteVideos() {
-        $('.videosContainer').empty();
+        $('#videosContainer').empty();
     }
 
     function setupMakeCallUI() {
