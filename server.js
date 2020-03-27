@@ -1,18 +1,24 @@
-// Load required modules
-var http    = require("http");              // http server core module
-var express = require("express");           // web framework external module
-var io      = require("socket.io");         // web socket external module
-var easyrtc = require("open-easyrtc");           // EasyRTC external module
+var app = require('express')();
+var path = require('path');
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 
-// Setup and configure Express http server. Expect a subfolder called "static" to be the web root.
-var httpApp = express();
-httpApp.use(express.static(__dirname + "/static/"));
+server.listen(process.env.PORT);
 
-// Start Express http server on port
-var webServer = http.createServer(httpApp).listen(process.env.PORT);
+// needed?
+// app.use(app.static(__dirname + 'static'));
 
-// Start Socket.io so it attaches itself to Express server
-var socketServer = io.listen(webServer);
+app.get('/static/script.js', function(req, res) {
+    res.sendFile(path.join(__dirname + '/script.js'));
+});
 
-// Start EasyRTC server
-var easyrtcServer = easyrtc.listen(httpApp, socketServer);
+app.get('/', function (req, res) {
+    res.sendFile(__dirname + "/static/index.html");
+});
+
+io.on('connection', function (socket) {
+  socket.emit('news', { hello: 'world' });
+  socket.on('my other event', function (data) {
+    console.log(data);
+  });
+});

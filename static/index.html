@@ -15,11 +15,73 @@
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js" type="text/javascript"></script>
     <script type="text/javascript" src="https://cdn.webrtc.ecl.ntt.com/skyway-latest.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
     <script type="text/javascript" src="script.js"></script>
 
     <!-- Bundled Bootstrap (includes Popper) -->
     <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js">
     </script>
+
+    <!-- GET https://api.thingspeak.com/channels/1012790/feeds.json?api_key=UAVE2ZYBLZS5LT6S&results=2 -->
+
+    <!-- function updateSpots() {
+          var feedURL = "https://api.thingspeak.com/channels/1012790/feeds.json?api_key=UAVE2ZYBLZS5LT6S&results=2";
+
+          fetch(feedURL)
+            .then((response) => {
+              return response.json();
+            })
+            .then((myJson) => {
+              console.log("feed");
+              console.log(myJson);
+
+              var feedStream = myJson.feeds[0];
+
+              if (feedStream.field1 == 0) {
+                // hide car
+                document.getElementById("one").style.border = "10px solid green";
+                document.getElementById("onePic").style.display = "none";
+                car1 = false;
+              } else if (feedStream.field1 == 1) {
+                // show car
+                document.getElementById("one").style.border = "10px solid yellow";
+                document.getElementById("onePic").style.display = "block";
+                car1 = true;
+              } else {
+                console.err("Invalid response from server.");
+              }
+
+              if (feedStream.field2 == 0) {
+                // hide car
+                document.getElementById("two").style.border = "10px solid green";
+                document.getElementById("twoPic").style.display = "none";
+                car2 = false;
+              } else if (feedStream.field2 == 1) {
+                // show car
+                document.getElementById("two").style.border = "10px solid yellow";
+                document.getElementById("twoPic").style.display = "block";
+                car2 = true;
+              } else {
+                console.err("Invalid response from server.");
+              }
+
+              if (feedStream.field3 == 0) {
+                // hide car
+                document.getElementById("three").style.border = "10px solid green";
+                document.getElementById("threePic").style.display = "none";
+                car3 = false;
+              } else if (feedStream.field3 == 1) {
+                // show car
+                document.getElementById("three").style.border = "10px solid yellow";
+                document.getElementById("threePic").style.display = "block";
+                car3 = true;
+              } else {
+                console.err("Invalid response from server.");
+              }
+
+              updateFull();
+            });
+        } -->
 
     <!-- Script for communicating with local device MQTT server for movement instructions -->
     <!-- TODO: Try to move this to script.js -->
@@ -27,17 +89,23 @@
         var mqtt;
 
         $(function () {
-            mqtt = new Paho.MQTT.Client("localhost", 9090, "cli01");
-            console.log("connecting");
+            
+            // Only tries to connect to local MQTT server if device mode toggle is clicked
+            $('input[id="deviceMode"]').click(function () {
+                if($('#deviceMode').is(":checked")){
+                    mqtt = new Paho.MQTT.Client("localhost", 9090, "cli01");
+                    console.log("connecting");
 
-            var options = {
-                timeout: 60,
-                onSuccess: onConnect,
-                onFailure: onFailure,
-            };
+                    var options = {
+                        timeout: 60,
+                        onSuccess: onConnect,
+                        onFailure: onFailure,
+                    };
 
-            mqtt.onMessageArrived = onMessageArrived;
-            mqtt.connect(options);
+                    mqtt.onMessageArrived = onMessageArrived;
+                    mqtt.connect(options);
+                }
+            });
         });
 
         function onConnect() {
@@ -117,6 +185,15 @@
             <video id="myStream" autoplay muted="true"></video>
         </div>
 
+        
+
+        <div class="row">
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="deviceMode">
+                <label class="custom-control-label" for="deviceMode">Local Device Mode</label>
+            </div>
+        </div>
+
         <div class="row p-1">
             <div class="col-12">
                 <label for="audioSource">Audio input source: </label><select id="audioSource"></select>
@@ -131,6 +208,15 @@
             <p id="hostLink" style="display:none">Send someone else this link: www.unoteam5.com?room=<span
                     id="my-id">...</span></p>
         </div>
+
+        <!-- <script src="/socket.io/socket.io.js"></script>
+        <script>
+            var socket = io.connect('http://localhost');
+            socket.on("news", function(data){
+                console.log(data);
+                socket.emit('my other event', { my: 'data' });
+            });
+        </script> -->
 
         <div class="row">
             <form id="make-call">

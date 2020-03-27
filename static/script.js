@@ -59,6 +59,23 @@ $(function () {
         $('#hostLink').show();
         $('#my-id').text(peer.id);
 
+        // var xhttp = new XMLHttpRequest();
+        // xhttp.onreadystatechange = function() {
+        //     console.log('OnReadyState Entered');
+        //     if (this.readyState == 4 && this.status == 200) {
+        //         console.log('If Statement Entered');
+        //         console.log(this.responseText);
+        //     }
+        // };
+        // xhttp.open("GET", "https://elsa.unoteam5.com", true);
+        // xhttp.send();
+
+        // var socket = io.connect("/socket.io/socket.io.js");
+        // socket.on("news", function(data){
+        //     console.log(data);
+        //     socket.emit('my other event', { my: 'data' });
+        // });
+
         $('#join-room').val(peer.id);
 
         
