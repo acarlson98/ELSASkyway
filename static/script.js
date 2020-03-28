@@ -68,10 +68,6 @@ $(function () {
         debug: 3
     });
 
-    // peer.on('open', function () {
-    //     $('#my-id').text(peer.id);
-    // });
-
     // When host button is clicked
     $('#host').click(function () {
         $('#host').hide();
@@ -208,9 +204,6 @@ $(function () {
         console.log('from URL: ' + URLroom);
         $('#join-room').val(URLroom);
     });
-
-    // needed?
-    // peer.once('open', id => (localId.textContent = id));
 
     // Register connected peer handler
     peer.on('connection', function (connection) {

@@ -4,7 +4,7 @@
 <head lang="en">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>SkyWay ELSA Monitor</title>
+    <title>ELSA Remote Monitor</title>
 
     <!-- CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -22,73 +22,6 @@
     <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js">
     </script>
 
-    <!-- Script for communicating with local device MQTT server for movement instructions -->
-    <!-- TODO: Try to move this to script.js -->
-    <script type="text/javascript">
-        var mqtt;
-
-        $(function () {
-            
-            // Only tries to connect to local MQTT server if device mode toggle is clicked
-            $('input[id="deviceMode"]').click(function () {
-                if($('#deviceMode').is(":checked")){
-                    mqtt = new Paho.MQTT.Client("localhost", 9090, "cli01");
-                    console.log("connecting");
-
-                    var options = {
-                        timeout: 60,
-                        onSuccess: onConnect,
-                        onFailure: onFailure,
-                    };
-
-                    mqtt.onMessageArrived = onMessageArrived;
-                    mqtt.connect(options);
-                }
-            });
-        });
-
-        function onConnect() {
-            console.log("on Connect");
-            mqtt.subscribe("isyjp/tp01");
-        }
-
-        function onMessageArrived(msg) {
-            console.log("on Arrived");
-            console.log(msg.payloadString)
-            $('#message').text(msg.payloadString);
-        }
-
-        function onFailure() {}
-
-        function up() {
-            message = new Paho.MQTT.Message("up");
-            message.destinationName = "isyjp/gpio21";
-            mqtt.send(message);
-            console.log("up tilt");
-        }
-
-        function down() {
-            message = new Paho.MQTT.Message("down");
-            message.destinationName = "isyjp/gpio21";
-            mqtt.send(message);
-            console.log("down tilt");
-        }
-
-        function left() {
-            message = new Paho.MQTT.Message("left");
-            message.destinationName = "isyjp/gpio21";
-            mqtt.send(message);
-            console.log("left turn");
-        }
-
-        function right() {
-            message = new Paho.MQTT.Message("right");
-            message.destinationName = "isyjp/gpio21";
-            mqtt.send(message);
-            console.log("right turn");
-        }
-    </script>
-
 </head>
 
 <body>
@@ -103,13 +36,8 @@
             <video id="myStream" autoplay muted="true"></video>
         </div>
 
-        
-
         <div class="row">
-            <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" id="deviceMode">
-                <label class="custom-control-label" for="deviceMode">Local Device Mode</label>
-            </div>
+            <h1>Remote Monitor Interface</h1>
         </div>
 
         <div class="row p-1">

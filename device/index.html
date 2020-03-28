@@ -4,7 +4,7 @@
 <head lang="en">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>SkyWay ELSA Monitor</title>
+    <title>ELSA Local Device Interface</title>
 
     <!-- CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -28,23 +28,17 @@
         var mqtt;
 
         $(function () {
-            
-            // Only tries to connect to local MQTT server if device mode toggle is clicked
-            $('input[id="deviceMode"]').click(function () {
-                if($('#deviceMode').is(":checked")){
-                    mqtt = new Paho.MQTT.Client("localhost", 9090, "cli01");
-                    console.log("connecting");
+            mqtt = new Paho.MQTT.Client("localhost", 9090, "cli01");
+            console.log("connecting");
 
-                    var options = {
-                        timeout: 60,
-                        onSuccess: onConnect,
-                        onFailure: onFailure,
-                    };
+            var options = {
+                timeout: 60,
+                onSuccess: onConnect,
+                onFailure: onFailure,
+            };
 
-                    mqtt.onMessageArrived = onMessageArrived;
-                    mqtt.connect(options);
-                }
-            });
+            mqtt.onMessageArrived = onMessageArrived;
+            mqtt.connect(options);
         });
 
         function onConnect() {
@@ -103,13 +97,8 @@
             <video id="myStream" autoplay muted="true"></video>
         </div>
 
-        
-
         <div class="row">
-            <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" id="deviceMode">
-                <label class="custom-control-label" for="deviceMode">Local Device Mode</label>
-            </div>
+            <h1>Local Device Interface</h1> 
         </div>
 
         <div class="row p-1">
