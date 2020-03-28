@@ -22,67 +22,6 @@
     <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js">
     </script>
 
-    <!-- GET https://api.thingspeak.com/channels/1012790/feeds.json?api_key=UAVE2ZYBLZS5LT6S&results=2 -->
-
-    <!-- function updateSpots() {
-          var feedURL = "https://api.thingspeak.com/channels/1012790/feeds.json?api_key=UAVE2ZYBLZS5LT6S&results=2";
-
-          fetch(feedURL)
-            .then((response) => {
-              return response.json();
-            })
-            .then((myJson) => {
-              console.log("feed");
-              console.log(myJson);
-
-              var feedStream = myJson.feeds[0];
-
-              if (feedStream.field1 == 0) {
-                // hide car
-                document.getElementById("one").style.border = "10px solid green";
-                document.getElementById("onePic").style.display = "none";
-                car1 = false;
-              } else if (feedStream.field1 == 1) {
-                // show car
-                document.getElementById("one").style.border = "10px solid yellow";
-                document.getElementById("onePic").style.display = "block";
-                car1 = true;
-              } else {
-                console.err("Invalid response from server.");
-              }
-
-              if (feedStream.field2 == 0) {
-                // hide car
-                document.getElementById("two").style.border = "10px solid green";
-                document.getElementById("twoPic").style.display = "none";
-                car2 = false;
-              } else if (feedStream.field2 == 1) {
-                // show car
-                document.getElementById("two").style.border = "10px solid yellow";
-                document.getElementById("twoPic").style.display = "block";
-                car2 = true;
-              } else {
-                console.err("Invalid response from server.");
-              }
-
-              if (feedStream.field3 == 0) {
-                // hide car
-                document.getElementById("three").style.border = "10px solid green";
-                document.getElementById("threePic").style.display = "none";
-                car3 = false;
-              } else if (feedStream.field3 == 1) {
-                // show car
-                document.getElementById("three").style.border = "10px solid yellow";
-                document.getElementById("threePic").style.display = "block";
-                car3 = true;
-              } else {
-                console.err("Invalid response from server.");
-              }
-
-              updateFull();
-            });
-        } -->
-
     <!-- Script for communicating with local device MQTT server for movement instructions -->
     <!-- TODO: Try to move this to script.js -->
     <script type="text/javascript">
@@ -153,31 +92,10 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg" style="background-color:#212AE8">
+    <nav class="navbar navbar-expand-lg">
         <a class="navbar-brand">
             <img style="height:100px" src="ELSA-logos_white.png">
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Sensor</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Setting</a>
-                </li>
-            </ul>
-        </div>
     </nav>
 
     <div class="container">
@@ -245,21 +163,19 @@
         </div>
 
         <div class="row">
-            <div class="col-6">
+            <div class="col-md-6">
                 <button class="btn btn-secondary" onclick="up()" id="headup">UP</button>
                 <button class="btn btn-secondary" onclick="down()" id="headdown">DOWN</button>
                 <button class="btn btn-secondary" onclick="left()" id="headleft">LEFT</button>
                 <button class="btn btn-secondary" onclick="right()" id="headright">RIGHT</button>
             </div>
 
-            <div class="col-6">
-                <!-- Settings modal -->
+            <!-- <div class="col-6">
                 <button type="button" class="btn btn-primary float-right" data-toggle="modal"
                     data-target="#exampleModal">
                     Settings
                 </button>
 
-                <!-- Modal -->
                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -281,8 +197,35 @@
                     </div>
                 </div>
 
-            </div>
-
+            </div> -->
+        
+            <button class="btn btn-primary" onclick="refreshSensors()">Refresh Sensors</button>
+            <table class="table col-md-6 p-1">
+                <thead>
+                    <tr>
+                        <th scope="col">Field #</th>
+                        <th scope="col">Data</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td id="sensorArea1"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td id="sensorArea2"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td id="sensorArea3"></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <script>
+                
+            </script>
         </div>
 
 </body>

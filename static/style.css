@@ -52,8 +52,8 @@ div #end-call {
     display: none;
 }
 
-.navbar-toggler {
-    background-color: lightblue;
+.navbar-expand-lg {
+    background-color: #212AE8;
 }
 
 input[type=text] {

@@ -1,3 +1,21 @@
+var feedURL = "https://api.thingspeak.com/channels/1012790/feeds.json?api_key=UAVE2ZYBLZS5LT6S&results=2";
+
+function refreshSensors() {
+    fetch(feedURL)
+        .then((response) => {
+        return response.json();
+        })
+        .then((myJson) => {
+            console.log("feed");
+            console.log(myJson);
+
+            var feedStream = myJson.feeds[0];
+            document.getElementById("sensorArea1").textContent = feedStream.field1;
+            document.getElementById("sensorArea2").textContent = feedStream.field2;
+            document.getElementById("sensorArea3").textContent = feedStream.field3;
+        });
+}
+
 $(function () {
 
     let localStream = null;
@@ -10,6 +28,7 @@ $(function () {
     let messages = document.getElementById('response');
     let audioSelect = $('#audioSource');
     let videoSelect = $('#videoSource');
+    
 
     navigator.mediaDevices.enumerateDevices()
         .then(function (deviceInfos) {
