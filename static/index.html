@@ -24,7 +24,7 @@
 
 </head>
 
-<body>
+<body onload="startTime()">
     <nav class="navbar navbar-expand-lg">
         <a class="navbar-brand">
             <img style="height:100px" src="ELSA-logos_white.png">
@@ -34,6 +34,7 @@
                 <a class="nav-link" href="/device" style="color:white">Local Device Interface</a>
             </li>
         </ul>
+        <span class="navbar-text" id="clock" style="color:white"></span>
     </nav>
 
     <div class="container">
@@ -131,7 +132,7 @@
                 </div>
 
             </div> -->
-        
+
             <button class="btn btn-primary" onclick="refreshSensors()">Refresh Sensors</button>
             <table class="table col-md-6 p-1">
                 <thead>
@@ -155,9 +156,9 @@
                     </tr>
                 </tbody>
             </table>
-            
+
             <script>
-                
+
             </script>
         </div>
 

@@ -3,7 +3,7 @@ var feedURL = "https://api.thingspeak.com/channels/1012790/feeds.json?api_key=UA
 function refreshSensors() {
     fetch(feedURL)
         .then((response) => {
-        return response.json();
+            return response.json();
         })
         .then((myJson) => {
             console.log("feed");
@@ -14,6 +14,25 @@ function refreshSensors() {
             document.getElementById("sensorArea2").textContent = feedStream.field2;
             document.getElementById("sensorArea3").textContent = feedStream.field3;
         });
+}
+
+function startTime() {
+    var today = new Date();
+    var h = today.getHours();
+    var m = today.getMinutes();
+    var s = today.getSeconds();
+    m = checkTime(m);
+    s = checkTime(s);
+    document.getElementById('clock').innerHTML =
+        h + ":" + m + ":" + s;
+    var t = setTimeout(startTime, 500);
+}
+
+function checkTime(i) {
+    if (i < 10) {
+        i = "0" + i
+    }; // add zero in front of numbers < 10
+    return i;
 }
 
 $(function () {
@@ -28,7 +47,7 @@ $(function () {
     let messages = document.getElementById('response');
     let audioSelect = $('#audioSource');
     let videoSelect = $('#videoSource');
-    
+
 
     navigator.mediaDevices.enumerateDevices()
         .then(function (deviceInfos) {
@@ -93,7 +112,7 @@ $(function () {
 
         $('#join-room').val(peer.id);
 
-        
+
         // Send LINE message with room URL
         // var data = {
         //     "Content-Type" : "application/json",
@@ -137,20 +156,19 @@ $(function () {
         connection.on('data', data => {
             console.log("Self Handler: ");
             console.log(data);
-            if(data == "up"){
+            if (data == "up") {
                 up();
                 messages.textContent += `Movement Remote: ${data}\n`;
-            } else if (data == "down"){
+            } else if (data == "down") {
                 down();
                 messages.textContent += `Movement Remote: ${data}\n`;
-            } else if(data == "left"){
+            } else if (data == "left") {
                 left();
                 messages.textContent += `Movement Remote: ${data}\n`;
-            } else if (data == "right"){
+            } else if (data == "right") {
                 right();
                 messages.textContent += `Movement Remote: ${data}\n`;
-            }
-            else{
+            } else {
                 messages.textContent += `Remote: ${data}\n`;
             }
         });
@@ -217,20 +235,19 @@ $(function () {
         connection.on('data', data => {
             console.log("Peer Handler: ");
             console.log(data);
-            if(data == "up"){
+            if (data == "up") {
                 up();
                 messages.textContent += `Movement Remote: ${data}\n`;
-            } else if (data == "down"){
+            } else if (data == "down") {
                 down();
                 messages.textContent += `Movement Remote: ${data}\n`;
-            } else if(data == "left"){
+            } else if (data == "left") {
                 left();
                 messages.textContent += `Movement Remote: ${data}\n`;
-            } else if (data == "right"){
+            } else if (data == "right") {
                 right();
                 messages.textContent += `Movement Remote: ${data}\n`;
-            }
-            else{
+            } else {
                 messages.textContent += `Remote: ${data}\n`;
             }
         });
