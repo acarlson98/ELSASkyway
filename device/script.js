@@ -16,6 +16,10 @@ function refreshSensors() {
         });
 }
 
+function removeFace() {
+    document.getElementById('face').style.display='none';
+}
+
 $(function () {
 
     let localStream = null;
