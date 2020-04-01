@@ -195,6 +195,8 @@ $(function () {
 
     $('#end-call').click(function () {
         existingCall.close();
+        $('#host').show();
+        $('#hostLink').hide();
     });
 
     $('#headup').click(function () {
@@ -352,11 +354,12 @@ $(function () {
     function removeVideo(peerId) {
         $('#' + peerId).remove();
     }
-
+    
     // This removes all videos
     // TODO: Make it only remove the remote videos?
     function removeAllRemoteVideos() {
         $('#videosContainer').empty();
+        // addVideo(localStream);
     }
 
     function setupMakeCallUI() {

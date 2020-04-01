@@ -85,7 +85,7 @@
 
 </head>
 
-<body onload="startTime()">
+<body onload="startTime();refreshSensors()">
     <nav class="navbar navbar-expand-lg">
         <a class="navbar-brand">
             <img style="height:100px" src="ELSA-logos_white.png">
@@ -220,9 +220,11 @@
                 </tbody>
             </table>
 
-            <script>
+        </div>
 
-            </script>
+        <div class="row">
+            <input type="checkbox" id="debugMode" onclick="debugCheck()">
+            <label for="debugMode">Debug Mode</label>
         </div>
 
 </body>

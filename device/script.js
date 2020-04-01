@@ -40,6 +40,16 @@ function checkTime(i) {
     return i;
 }
 
+function debugCheck(){
+    if($('#debugMode').checked) {
+        $('#audioSource').show();
+        $('#videoSource').show();
+    } else {
+        $('#audioSource').hide();
+        $('#videoSource').hide();
+    }
+}
+
 $(function () {
 
     let localStream = null;
@@ -91,10 +101,6 @@ $(function () {
         key: '7df85c95-5208-405f-95a4-bd5e1f566321',
         debug: 3
     });
-
-    // peer.on('open', function () {
-    //     $('#my-id').text(peer.id);
-    // });
 
     // When host button is clicked
     $('#host').click(function () {
@@ -204,6 +210,8 @@ $(function () {
 
     $('#end-call').click(function () {
         existingCall.close();
+        $('#host').show();
+        $('#hostLink').hide();
     });
 
     $('#headup').click(function () {
@@ -231,9 +239,6 @@ $(function () {
         console.log('from URL: ' + URLroom);
         $('#join-room').val(URLroom);
     });
-
-    // needed?
-    // peer.once('open', id => (localId.textContent = id));
 
     // Register connected peer handler
     peer.on('connection', function (connection) {
@@ -364,11 +369,12 @@ $(function () {
     function removeVideo(peerId) {
         $('#' + peerId).remove();
     }
-
+    
     // This removes all videos
     // TODO: Make it only remove the remote videos?
     function removeAllRemoteVideos() {
         $('#videosContainer').empty();
+        // addVideo(localStream);
     }
 
     function setupMakeCallUI() {
