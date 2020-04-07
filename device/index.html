@@ -23,7 +23,6 @@
     </script>
 
     <!-- Script for communicating with local device MQTT server for movement instructions -->
-    <!-- TODO: Try to move this to script.js -->
     <script type="text/javascript">
         var mqtt;
 
@@ -85,19 +84,21 @@
 
 </head>
 
-<body onload="startTime();refreshSensors()">
+<!-- Voice recognition, time, and sensors -->
+<body onload="recognition.start();startTime();refreshSensors()">
     <nav class="navbar navbar-expand-lg">
-        <a class="navbar-brand">
+        <a class="navbar-brand col-4">
             <img style="height:100px" src="ELSA-logos_white.png">
         </a>
-        <ul class="navbar-nav">
+        <ul class="navbar-nav col-4 text-center">
             <li class="nav-item">
                 <a class="nav-link" href="../" style="color:white">ELSA Remote Interface</a>
             </li>
         </ul>
-        <span class="navbar-text" id="clock" style="color:white"></span>
+        <span class="navbar-text col-4 float-right" id="clock" style="color:white"></span>
     </nav>
 
+    <!-- Happy face for when device is idling -->
     <image src="happy_face.jpg" id="face" style="width:100%" onclick="removeFace()"></image>
 
     <div class="container" id="mainBody" style="display:none">
@@ -123,15 +124,6 @@
             <p id="hostLink" style="display:none">Send someone else this link: www.unoteam5.com?room=<span
                     id="my-id">...</span></p>
         </div>
-
-        <!-- <script src="/socket.io/socket.io.js"></script>
-        <script>
-            var socket = io.connect('http://localhost');
-            socket.on("news", function(data){
-                console.log(data);
-                socket.emit('my other event', { my: 'data' });
-            });
-        </script> -->
 
         <div class="row">
             <form id="make-call">
@@ -166,36 +158,58 @@
                 <button class="btn btn-secondary" onclick="left()" id="headleft">LEFT</button>
                 <button class="btn btn-secondary" onclick="right()" id="headright">RIGHT</button>
             </div>
+        </div>
 
-            <!-- <div class="col-6">
-                <button type="button" class="btn btn-primary float-right" data-toggle="modal"
-                    data-target="#exampleModal">
-                    Settings
-                </button>
+        <!-- <button id='btnGiveCommand'>Give Command!</button> -->
+        <div class="row m-1">
+            <p>Voice Recognition Test</p>
+            <input id='chkSteve' type="checkbox"> Steve Rogers
+            <input id='chkTony' type="checkbox"> Tony Stark
+        </div>
 
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Settings</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                Put settings here
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <!-- Voice recognition script -->
+        <script>
+            var message = document.querySelector('#message');
 
-            </div> -->
+            var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+            var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList;
 
+            var grammar = '#JSGF V1.0;'
+
+            var recognition = new SpeechRecognition();
+            var speechRecognitionList = new SpeechGrammarList();
+            speechRecognitionList.addFromString(grammar, 1);
+            recognition.grammars = speechRecognitionList;
+            recognition.lang = 'en-US';
+            recognition.interimResults = false;
+            recognition.continuous = true;
+
+            recognition.onresult = function (event) {
+                var last = event.results.length - 1;
+                var command = event.results[last][0].transcript;
+                console.log('Voice Input: ' + command + '.');
+
+                if (command.toLowerCase() === 'steve' | command.toLowerCase() === ' steve') {
+                    document.querySelector('#chkSteve').checked = true;
+                } else if (command.toLowerCase() === 'tony' | command.toLowerCase() === ' tony') {
+                    document.querySelector('#chkTony').checked = true;
+                }
+            };
+
+            recognition.onspeechend = function () {
+                recognition.stop();
+            };
+
+            recognition.onerror = function (event) {
+                console.log('Error occurred in recognition: ' + event.error);
+            }
+
+            // document.querySelector('#btnGiveCommand').addEventListener('click', function () {
+            // recognition.start();
+            // });
+        </script>
+
+        <div class="row">
             <button class="btn btn-primary" onclick="refreshSensors()">Refresh Sensors</button>
             <table class="table col-md-6 p-1">
                 <thead>

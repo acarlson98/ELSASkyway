@@ -1,3 +1,8 @@
+/* Debug, shows where container iss */
+.container {
+    background-color: #a9a9a9;
+}
+
 nav {
     border-bottom: 1px solid #212AE8;
     z-index: 1;
