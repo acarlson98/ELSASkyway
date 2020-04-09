@@ -92,41 +92,7 @@ $(function () {
         $('#host').hide();
         $('#hostLink').show();
         $('#my-id').text(peer.id);
-
-        // var xhttp = new XMLHttpRequest();
-        // xhttp.onreadystatechange = function() {
-        //     console.log('OnReadyState Entered');
-        //     if (this.readyState == 4 && this.status == 200) {
-        //         console.log('If Statement Entered');
-        //         console.log(this.responseText);
-        //     }
-        // };
-        // xhttp.open("GET", "https://elsa.unoteam5.com", true);
-        // xhttp.send();
-
-        // var socket = io.connect("/socket.io/socket.io.js");
-        // socket.on("news", function(data){
-        //     console.log(data);
-        //     socket.emit('my other event', { my: 'data' });
-        // });
-
         $('#join-room').val(peer.id);
-
-
-        // Send LINE message with room URL
-        // var data = {
-        //     "Content-Type" : "application/json",
-        //     "Authorization" : "Bearer rK1l5F+em4UBIwIx5ZooYIgpaesvVO4KdCRol150ecy4O6wIFwV3q0Ds2xV3GXj95Kcb/eu+sNX3nRcO+cFll0hMXbL1aDw9f8zWS1UeskkqY+YxcdZb+YosmS81zlCuEW1S60GfRLd+J0bH4js10wdB04t89/1O/w1cDnyilFU=",
-        //     "to" : "",
-        //     "messages" : 
-        //         {
-        //             "type" : "text",
-        //             "text" : "Test Message"
-        //         }
-        //     };
-        // $.post('https://api.line.me/v2/bot/message/push', data, function(data, status){
-        //     console.log(`${data} and status is ${status}`);
-        // });
     });
 
     peer.on('error', function (err) {

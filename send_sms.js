@@ -10,7 +10,7 @@ const client = require('twilio')(accountSid, authToken);
 client.messages
   .create({
      body: 'This is the ship that made the Kessel Run in fourteen parsecs?',
-     from: '+12018014005',
-     to: '+14022535372'
+     from: '+12018014005', // Twilio number
+     to: '+14022535372' // Drew's number
    })
   .then(message => console.log(message.sid));
