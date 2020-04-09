@@ -17,7 +17,7 @@ function refreshSensors() {
 }
 
 function removeFace() {
-    document.getElementById('face').style.display = 'none';
+    document.getElementById('faceContainer').style.display = 'none';
     document.getElementById('mainBody').style.display = 'block';
 }
 
