@@ -151,20 +151,12 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-6">
-                <button class="btn btn-secondary" onclick="up()" id="headup">UP</button>
-                <button class="btn btn-secondary" onclick="down()" id="headdown">DOWN</button>
-                <button class="btn btn-secondary" onclick="left()" id="headleft">LEFT</button>
-                <button class="btn btn-secondary" onclick="right()" id="headright">RIGHT</button>
-            </div>
-        </div>
-
         <!-- <button id='btnGiveCommand'>Give Command!</button> -->
         <div class="row m-1">
             <p>Voice Recognition Test</p>
             <input id='chkSteve' type="checkbox"> Steve Rogers
             <input id='chkTony' type="checkbox"> Tony Stark
+            <input id='emergency' type="checkbox"> ELSA Help
         </div>
 
         <!-- Voice recognition script -->
@@ -193,6 +185,8 @@
                     document.querySelector('#chkSteve').checked = true;
                 } else if (command.toLowerCase() === 'tony' | command.toLowerCase() === ' tony') {
                     document.querySelector('#chkTony').checked = true;
+                } else if (command.toLowerCase().includes('elsa') & command.toLowerCase().includes('help')){
+                    document.querySelector('#emergency').checked = true;
                 }
             };
 
