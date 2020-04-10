@@ -183,6 +183,9 @@ $(function () {
             } else if (data == "right") {
                 right();
                 messages.textContent += `Movement Remote: ${data}\n`;
+            } else if (data == "alert") {
+                elsaAlert();
+                messages.textContent += `Alert Sent\n`;
             } else {
                 messages.textContent += `Remote: ${data}\n`;
             }
