@@ -22,7 +22,7 @@
     <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js">
     </script>
 
-    <!-- Script for communicating with local device MQTT server for movement instructions -->
+    <!-- Script for communicating with local device MQTT server for movement instructions and alert notifications -->
     <script type="text/javascript">
         var mqtt;
 
@@ -79,6 +79,14 @@
             message.destinationName = "isyjp/gpio21";
             mqtt.send(message);
             console.log("right turn");
+        }
+
+        function alert() {
+            message = new Paho.MQTT.Message("alert");
+            message.destinationName = "isyjp/gpio21";
+            // also need to send room ID
+            mqtt.send(message);
+            console.log("alert sent");
         }
     </script>
 
@@ -189,6 +197,8 @@
                     document.querySelector('#chkTony').checked = true;
                 } else if (command.toLowerCase().includes('elsa') & command.toLowerCase().includes('help')){
                     document.querySelector('#emergency').checked = true;
+                    // MQTT alert function
+                    alert();
                 }
             };
 
