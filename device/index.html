@@ -53,20 +53,6 @@
 
         function onFailure() {}
 
-        function up() {
-            message = new Paho.MQTT.Message("up");
-            message.destinationName = "isyjp/gpio21";
-            mqtt.send(message);
-            console.log("up tilt");
-        }
-
-        function down() {
-            message = new Paho.MQTT.Message("down");
-            message.destinationName = "isyjp/gpio21";
-            mqtt.send(message);
-            console.log("down tilt");
-        }
-
         function left() {
             message = new Paho.MQTT.Message("left");
             message.destinationName = "isyjp/gpio21";
@@ -99,12 +85,8 @@
         <a class="navbar-brand col-5">
             <img style="height:100px" src="ELSA-logos_white.png">
         </a>
-        <ul class="navbar-nav col-5 text-center">
-            <li class="nav-item">
-                <a class="nav-link" href="../" style="color:white">ELSA Remote Interface</a>
-            </li>
-        </ul>
-        <span class="navbar-text col-2" id="clock" style="color:white; float:right"></span>
+        <h1 class="col-6" style="color:white">ELSA Remote Interface</h1>
+        <span class="navbar-text col-1" id="clock" style="color:white"></span>
     </nav>
 
     <div class="container" id="faceContainer">
@@ -113,40 +95,37 @@
     </div>
 
     <div class="container" id="mainBody" style="display:none">
-        <div class="row p-1" id="videosContainer">
-            <video id="myStream" autoplay muted="true"></video>
-        </div>
-
-        <div class="row">
-            <h1>Local Device Interface</h1>
-        </div>
-
-        <div class="row p-1">
+        <div class="row" id="videosContainer">
             <div class="col-12">
-                <label for="audioSource">Audio input source: </label><select id="audioSource"></select>
-            </div>
-            <div class="col-12">
-                <label for="videoSource">Video source: </label><select id="videoSource"></select>
+                <video id="myStream" autoplay muted="true"></video>
             </div>
         </div>
 
         <div class="row">
-            <button class="btn btn-secondary" id="host">Host Room</button>
-            <p id="hostLink" style="display:none">Send someone else this link: www.unoteam5.com?room=<span
-                    id="my-id">...</span></p>
+            <div class="col-12">
+                <button class="btn btn-secondary" id="host">Host Room</button>
+                <div id="hostLink" style="display:none">
+                    <p>Send someone else this link:</p>
+                    <p id="copyLink">www.unoteam5.com?room=<span id="my-id">...</span></p>
+                    <!-- <button onclick="copyID()">Copy text</button>
+                    <p>Click on the button to copy the link.</p> -->
+                </div>
+            </div>
         </div>
 
         <div class="row">
-            <form id="make-call">
-                <input type="text" placeholder="Join room..." id="join-room" size="50">
-                <button class="btn btn-primary" type="submit">Join</button>
-            </form>
+            <div class="col-12">
+                <form id="make-call">
+                    <input type="text" placeholder="Join room..." id="join-room" size="50">
+                    <button class="btn btn-primary" type="submit">Join</button>
+                </form>
+            </div>
         </div>
 
         <div class="row">
             <div id="end-call">
                 <p>Currently in room <span id="room-id">...</span></p>
-                <button id="leave">Leave</button>
+                <button class="btn btn-secondary" id="leave">Leave</button>
             </div>
         </div>
 
@@ -214,7 +193,8 @@
 
         <div class="row">
             <button class="btn btn-primary" onclick="refreshSensors()">Refresh Sensors</button>
-            <table class="table col-md-6 p-1">
+
+            <table class="table">
                 <thead>
                     <tr>
                         <th scope="col">Field #</th>
@@ -240,8 +220,21 @@
         </div>
 
         <div class="row">
+            <a href="../">Switch to Remote Monitor Interface</a>
+        </div>
+
+        <div class="row">
             <input type="checkbox" id="debugMode" onclick="debugCheck()">
             <label for="debugMode">Debug Mode</label>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <label for="audioSource">Audio input source: </label><select id="audioSource"></select>
+            </div>
+            <div class="col-12">
+                <label for="videoSource">Video source: </label><select id="videoSource"></select>
+            </div>
         </div>
 
 </body>
