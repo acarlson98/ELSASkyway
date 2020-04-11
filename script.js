@@ -35,6 +35,15 @@ function checkTime(i) {
     return i;
 }
 
+// These will be used for buttons
+function left() {
+
+}
+
+function right() {
+
+}
+
 $(function () {
 
     let localStream = null;
@@ -122,21 +131,7 @@ $(function () {
         connection.on('data', data => {
             console.log("Self Handler: ");
             console.log(data);
-            if (data == "up") {
-                up();
-                messages.textContent += `Movement Remote: ${data}\n`;
-            } else if (data == "down") {
-                down();
-                messages.textContent += `Movement Remote: ${data}\n`;
-            } else if (data == "left") {
-                left();
-                messages.textContent += `Movement Remote: ${data}\n`;
-            } else if (data == "right") {
-                right();
-                messages.textContent += `Movement Remote: ${data}\n`;
-            } else {
-                messages.textContent += `Remote: ${data}\n`;
-            }
+            messages.textContent += `Remote: ${data}\n`;
         });
 
         connection.once('close', () => {
@@ -165,26 +160,6 @@ $(function () {
         $('#hostLink').hide();
     });
 
-    $('#headup').click(function () {
-        console.log("up");
-        // dataConn.send("up");
-    });
-
-    $('#headdown').click(function () {
-        console.log("down");
-        // dataConn.send("down");
-    });
-
-    $('#headleft').click(function () {
-        console.log("left");
-        // dataConn.send("left");
-    });
-
-    $('#headright').click(function () {
-        console.log("right");
-        // dataConn.send("right");
-    });
-
     peer.on('open', function () {
         console.log('open: ' + peer.id);
         console.log('from URL: ' + URLroom);
@@ -203,21 +178,7 @@ $(function () {
         connection.on('data', data => {
             console.log("Peer Handler: ");
             console.log(data);
-            if (data == "up") {
-                up();
-                messages.textContent += `Movement Remote: ${data}\n`;
-            } else if (data == "down") {
-                down();
-                messages.textContent += `Movement Remote: ${data}\n`;
-            } else if (data == "left") {
-                left();
-                messages.textContent += `Movement Remote: ${data}\n`;
-            } else if (data == "right") {
-                right();
-                messages.textContent += `Movement Remote: ${data}\n`;
-            } else {
-                messages.textContent += `Remote: ${data}\n`;
-            }
+            messages.textContent += `Remote: ${data}\n`;
         });
 
         connection.once('close', () => {
@@ -244,16 +205,8 @@ $(function () {
         let audioSource = $('#audioSource').val();
         let videoSource = $('#videoSource').val();
         let constraints = {
-            audio: {
-                deviceId: {
-                    exact: audioSource
-                }
-            },
-            video: {
-                deviceId: {
-                    exact: videoSource
-                }
-            }
+            audio: {deviceId: {exact: audioSource}},
+            video: {deviceId: {exact: videoSource}}
         };
         constraints.video.width = {
             min: 320,
@@ -321,11 +274,10 @@ $(function () {
         $('#' + peerId).remove();
     }
     
-    // This removes all videos
-    // TODO: Make it only remove the remote videos?
     function removeAllRemoteVideos() {
         $('#videosContainer').empty();
-        // addVideo(localStream);
+        // This brings back the localStream, but it's not muted
+        // setupGetUserMedia();
     }
 
     function setupMakeCallUI() {

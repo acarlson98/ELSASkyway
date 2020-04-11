@@ -26,61 +26,43 @@
 
 <body onload="startTime();refreshSensors()">
     <nav class="navbar navbar-expand-lg">
-        <a class="navbar-brand">
+        <a class="navbar-brand col-5">
             <img style="height:100px" src="ELSA-logos_white.png">
         </a>
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="/device" style="color:white">Local Device Interface</a>
-            </li>
-        </ul>
-        <span class="navbar-text" id="clock" style="color:white"></span>
+        <h1 class="col-6" style="color:white">Remote Monitor Interface</h1>
+        <span class="navbar-text col-1" id="clock" style="color:white"></span>
     </nav>
 
     <div class="container">
-        <div class="row p-1" id="videosContainer">
-            <video id="myStream" autoplay muted="true"></video>
-        </div>
-
         <div class="row">
-            <h1>Remote Monitor Interface</h1>
-        </div>
-
-        <div class="row p-1">
-            <div class="col-12">
-                <label for="audioSource">Audio input source: </label><select id="audioSource"></select>
-            </div>
-            <div class="col-12">
-                <label for="videoSource">Video source: </label><select id="videoSource"></select>
+            <div class="col-12" id="videosContainer">
+                <video id="myStream" autoplay muted="true"></video>
             </div>
         </div>
 
         <div class="row">
-            <button class="btn btn-secondary" id="host">Host Room</button>
-            <p id="hostLink" style="display:none">Send someone else this link: www.unoteam5.com?room=<span
-                    id="my-id">...</span></p>
+            <div class="col-12">
+                <button class="btn btn-secondary" id="host">Host Room</button>
+                <p id="hostLink" style="display:none">Send someone else this link: www.unoteam5.com?room=<span
+                        id="my-id">...</span></p>
+            </div>
         </div>
 
-        <!-- <script src="/socket.io/socket.io.js"></script>
-        <script>
-            var socket = io.connect('http://localhost');
-            socket.on("news", function(data){
-                console.log(data);
-                socket.emit('my other event', { my: 'data' });
-            });
-        </script> -->
-
         <div class="row">
-            <form id="make-call">
-                <input type="text" placeholder="Join room..." id="join-room" size="50">
-                <button class="btn btn-primary" type="submit">Join</button>
-            </form>
+            <div class="col-12">
+                <form id="make-call">
+                    <input type="text" placeholder="Join room..." id="join-room">
+                    <button class="btn btn-primary" type="submit">Join</button>
+                </form>
+            </div>
         </div>
 
         <div class="row">
             <div id="end-call">
+                <button class="btn btn-primary" onclick="left()">LEFT</button>
+                <button class="btn btn-primary" onclick="right()">RIGHT</button>
                 <p>Currently in room <span id="room-id">...</span></p>
-                <button id="leave">Leave</button>
+                <button class="btn btn-secondary" id="leave">Leave</button>
             </div>
         </div>
 
@@ -94,72 +76,47 @@
                         type="button" id="send">Send</button>
                 </p>
             </div>
-        </div>
+            </div>
 
-        <div class="row">
-            <div class="col-md-6">
-                <button class="btn btn-secondary" onclick="up()" id="headup">UP</button>
-                <button class="btn btn-secondary" onclick="down()" id="headdown">DOWN</button>
-                <button class="btn btn-secondary" onclick="left()" id="headleft">LEFT</button>
-                <button class="btn btn-secondary" onclick="right()" id="headright">RIGHT</button>
+            <div class="col-md-4 p-1">
+                <button class="btn btn-primary" onclick="refreshSensors()">Refresh Sensors</button>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Field #</th>
+                            <th scope="col">Data</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td id="sensorArea1"></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td id="sensorArea2"></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td id="sensorArea3"></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
-        <!-- <div class="col-6">
-                <button type="button" class="btn btn-primary float-right" data-toggle="modal"
-                    data-target="#exampleModal">
-                    Settings
-                </button>
-
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Settings</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                Put settings here
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div> -->
+        <div class="row">
+            <a href="/device">Switch to Local Device Interface</a>
+        </div>
 
         <div class="row">
-            <button class="btn btn-primary" onclick="refreshSensors()">Refresh Sensors</button>
-
-            <table class="table col-md-6 p-1">
-                <thead>
-                    <tr>
-                        <th scope="col">Field #</th>
-                        <th scope="col">Data</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td id="sensorArea1"></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td id="sensorArea2"></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td id="sensorArea3"></td>
-                    </tr>
-                </tbody>
-            </table>
-
+            <div class="col-12">
+                <label for="audioSource">Audio input source: </label><select id="audioSource"></select>
+            </div>
+            <div class="col-12">
+                <label for="videoSource">Video source: </label><select id="videoSource"></select>
+            </div>
         </div>
 
 </body>
