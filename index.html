@@ -43,8 +43,12 @@
         <div class="row">
             <div class="col-12">
                 <button class="btn btn-secondary" id="host">Host Room</button>
-                <p id="hostLink" style="display:none">Send someone else this link: www.unoteam5.com?room=<span
-                        id="my-id">...</span></p>
+                <div id="hostLink" style="display:none">
+                    <p>Send someone else this link:</p>
+                    <p id="copyLink">www.unoteam5.com?room=<span id="my-id">...</span></p>
+                    <!-- <button onclick="copyID()">Copy text</button>
+                    <p>Click on the button to copy the link.</p> -->
+                </div>
             </div>
         </div>
 
@@ -75,7 +79,6 @@
                 <p><input type="text" placeholder="Message" id="message" size="50">&nbsp;<button class="btn btn-primary"
                         type="button" id="send">Send</button>
                 </p>
-            </div>
             </div>
 
             <div class="col-md-4 p-1">
@@ -118,6 +121,7 @@
                 <label for="videoSource">Video source: </label><select id="videoSource"></select>
             </div>
         </div>
+    </div>
 
 </body>
 

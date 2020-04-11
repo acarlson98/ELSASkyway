@@ -35,6 +35,15 @@ function checkTime(i) {
     return i;
 }
 
+// function copyID() {
+//     // var copyText = document.getElementById("copyLink");
+//     var copyText = "www.unoteam5.com?room=" + peer.id;
+//     copyText.select();
+//     copyText.setSelectionRange(0, 99999)
+//     document.execCommand("copy");
+//     alert("Copied the text: " + copyText.value);
+// }
+
 // These will be used for buttons
 function left() {
 
@@ -154,7 +163,7 @@ $(function () {
         }
     });
 
-    $('#end-call').click(function () {
+    $('#leave').click(function () {
         existingCall.close();
         $('#host').show();
         $('#hostLink').hide();
@@ -270,6 +279,13 @@ $(function () {
         $('#videosContainer').append(videoDom);
     }
 
+    function addVideoMuted(stream) {
+        const videoDom = $('<video autoplay muted="true">');
+        videoDom.attr('id', stream.peerId);
+        videoDom.get(0).srcObject = stream;
+        $('#videosContainer').append(videoDom);
+    }
+
     function removeVideo(peerId) {
         $('#' + peerId).remove();
     }
@@ -277,6 +293,7 @@ $(function () {
     function removeAllRemoteVideos() {
         $('#videosContainer').empty();
         // This brings back the localStream, but it's not muted
+        addVideoMuted(localStream);
         // setupGetUserMedia();
     }
 
