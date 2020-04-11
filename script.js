@@ -44,15 +44,6 @@ function checkTime(i) {
 //     alert("Copied the text: " + copyText.value);
 // }
 
-// These will be used for buttons
-function left() {
-
-}
-
-function right() {
-
-}
-
 $(function () {
 
     let localStream = null;
@@ -61,6 +52,8 @@ $(function () {
     let connection = null;
     let closeTrigger = document.getElementById('leave');
     let sendTrigger = document.getElementById('send');
+    let leftTrigger = document.getElementById('left');
+    let rightTrigger = document.getElementById('right');
     let localText = document.getElementById('message');
     let messages = document.getElementById('response');
     let audioSelect = $('#audioSource');
@@ -135,6 +128,8 @@ $(function () {
         connection.once('open', async () => {
             messages.textContent += `=== DataConnection has been opened ===\n`;
             sendTrigger.addEventListener('click', onClickSend);
+            leftTrigger.addEventListener('click', onClickLeft);
+            rightTrigger.addEventListener('click', onClickRight);
         });
 
         connection.on('data', data => {
@@ -146,6 +141,8 @@ $(function () {
         connection.once('close', () => {
             messages.textContent += `=== DataConnection has been closed ===\n`;
             sendTrigger.removeEventListener('click', onClickSend);
+            leftTrigger.removeEventListener('click', onClickLeft);
+            rightTrigger.removeEventListener('click', onClickRight);
         });
 
         // Register closing handler
@@ -160,6 +157,21 @@ $(function () {
 
             messages.textContent += `You: ${data}\n`;
             localText.value = '';
+        }
+
+        // Movement buttons
+        function onClickLeft() {
+            const data = 'left';
+            console.log(data);
+            connection.send(data);
+            messages.textContent += `You: ${data}\n`;
+        }
+
+        function onClickRight() {
+            const data = 'right';
+            console.log(data);
+            connection.send(data);
+            messages.textContent += `You: ${data}\n`;
         }
     });
 
@@ -182,6 +194,8 @@ $(function () {
         connection.once('open', async () => {
             messages.textContent += `=== DataConnection has been opened ===\n`;
             sendTrigger.addEventListener('click', onClickSend);
+            leftTrigger.addEventListener('click', onClickLeft);
+            rightTrigger.addEventListener('click', onClickRight);
         });
 
         connection.on('data', data => {
@@ -193,6 +207,8 @@ $(function () {
         connection.once('close', () => {
             messages.textContent += `=== DataConnection has been closed ===\n`;
             sendTrigger.removeEventListener('click', onClickSend);
+            leftTrigger.removeEventListener('click', onClickLeft);
+            rightTrigger.removeEventListener('click', onClickRight);
         });
 
         // Register closing handler
@@ -207,6 +223,21 @@ $(function () {
 
             messages.textContent += `You: ${data}\n`;
             localText.value = '';
+        }
+
+        // Movement buttons
+        function onClickLeft() {
+            const data = 'left';
+            console.log(data);
+            connection.send(data);
+            messages.textContent += `You: ${data}\n`;
+        }
+
+        function onClickRight() {
+            const data = 'right';
+            console.log(data);
+            connection.send(data);
+            messages.textContent += `You: ${data}\n`;
         }
     });
 
