@@ -41,12 +41,10 @@ function checkTime(i) {
 }
 
 function debugCheck(){
-    if($('#debugMode').checked) {
-        $('#audioSource').show();
-        $('#videoSource').show();
+    if(document.getElementById("debugMode").checked) {
+        document.getElementById("sources").style.display = "block";
     } else {
-        $('#audioSource').hide();
-        $('#videoSource').hide();
+        document.getElementById("sources").style.display = "none";
     }
 }
 
@@ -107,41 +105,7 @@ $(function () {
         $('#host').hide();
         $('#hostLink').show();
         $('#my-id').text(peer.id);
-
-        // var xhttp = new XMLHttpRequest();
-        // xhttp.onreadystatechange = function() {
-        //     console.log('OnReadyState Entered');
-        //     if (this.readyState == 4 && this.status == 200) {
-        //         console.log('If Statement Entered');
-        //         console.log(this.responseText);
-        //     }
-        // };
-        // xhttp.open("GET", "https://elsa.unoteam5.com", true);
-        // xhttp.send();
-
-        // var socket = io.connect("/socket.io/socket.io.js");
-        // socket.on("news", function(data){
-        //     console.log(data);
-        //     socket.emit('my other event', { my: 'data' });
-        // });
-
         $('#join-room').val(peer.id);
-
-
-        // Send LINE message with room URL
-        // var data = {
-        //     "Content-Type" : "application/json",
-        //     "Authorization" : "Bearer rK1l5F+em4UBIwIx5ZooYIgpaesvVO4KdCRol150ecy4O6wIFwV3q0Ds2xV3GXj95Kcb/eu+sNX3nRcO+cFll0hMXbL1aDw9f8zWS1UeskkqY+YxcdZb+YosmS81zlCuEW1S60GfRLd+J0bH4js10wdB04t89/1O/w1cDnyilFU=",
-        //     "to" : "",
-        //     "messages" : 
-        //         {
-        //             "type" : "text",
-        //             "text" : "Test Message"
-        //         }
-        //     };
-        // $.post('https://api.line.me/v2/bot/message/push', data, function(data, status){
-        //     console.log(`${data} and status is ${status}`);
-        // });
     });
 
     peer.on('error', function (err) {
@@ -215,26 +179,6 @@ $(function () {
         existingCall.close();
         $('#host').show();
         $('#hostLink').hide();
-    });
-
-    $('#headup').click(function () {
-        console.log("up");
-        // dataConn.send("up");
-    });
-
-    $('#headdown').click(function () {
-        console.log("down");
-        // dataConn.send("down");
-    });
-
-    $('#headleft').click(function () {
-        console.log("left");
-        // dataConn.send("left");
-    });
-
-    $('#headright').click(function () {
-        console.log("right");
-        // dataConn.send("right");
     });
 
     peer.on('open', function () {
@@ -369,15 +313,21 @@ $(function () {
         $('#videosContainer').append(videoDom);
     }
 
+    function addVideoMuted(stream) {
+        const videoDom = $('<video autoplay muted="true">');
+        videoDom.attr('id', stream.peerId);
+        videoDom.get(0).srcObject = stream;
+        $('#videosContainer').append(videoDom);
+    }
+
     function removeVideo(peerId) {
         $('#' + peerId).remove();
     }
     
-    // This removes all videos
-    // TODO: Make it only remove the remote videos?
     function removeAllRemoteVideos() {
         $('#videosContainer').empty();
-        // addVideo(localStream);
+        // This brings back the muted localStream
+        addVideoMuted(localStream);
     }
 
     function setupMakeCallUI() {

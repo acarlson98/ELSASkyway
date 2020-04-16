@@ -141,14 +141,6 @@
             </div>
         </div>
 
-        <!-- <button id='btnGiveCommand'>Give Command!</button> -->
-        <div class="row m-1">
-            <p>Voice Recognition Test</p>
-            <input id='chkSteve' type="checkbox"> Steve Rogers
-            <input id='chkTony' type="checkbox"> Tony Stark
-            <input id='emergency' type="checkbox"> ELSA Help
-        </div>
-
         <!-- Voice recognition script -->
         <script>
             var message = document.querySelector('#message');
@@ -171,11 +163,7 @@
                 var command = event.results[last][0].transcript;
                 console.log('Voice Input: ' + command + '.');
 
-                if (command.toLowerCase() === 'steve' | command.toLowerCase() === ' steve') {
-                    document.querySelector('#chkSteve').checked = true;
-                } else if (command.toLowerCase() === 'tony' | command.toLowerCase() === ' tony') {
-                    document.querySelector('#chkTony').checked = true;
-                } else if (command.toLowerCase().includes('elsa') & command.toLowerCase().includes('help')){
+                if (command.toLowerCase().includes('elsa') & command.toLowerCase().includes('help')){
                     document.querySelector('#emergency').checked = true;
                     // MQTT alert function
                     elsaAlert();
@@ -228,7 +216,7 @@
             <label for="debugMode">Debug Mode</label>
         </div>
 
-        <div class="row">
+        <div class="row" id="sources" style="display:none">
             <div class="col-12">
                 <label for="audioSource">Audio input source: </label><select id="audioSource"></select>
             </div>
