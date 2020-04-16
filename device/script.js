@@ -135,13 +135,7 @@ $(function () {
         connection.on('data', data => {
             console.log("Self Handler: ");
             console.log(data);
-            if (data == "up") {
-                up();
-                messages.textContent += `Movement Remote: ${data}\n`;
-            } else if (data == "down") {
-                down();
-                messages.textContent += `Movement Remote: ${data}\n`;
-            } else if (data == "left") {
+            if (data == "left") {
                 left();
                 messages.textContent += `Movement Remote: ${data}\n`;
             } else if (data == "right") {
@@ -199,18 +193,13 @@ $(function () {
         connection.on('data', data => {
             console.log("Peer Handler: ");
             console.log(data);
-            if (data == "up") {
-                up();
-                messages.textContent += `Movement Remote: ${data}\n`;
-            } else if (data == "down") {
-                down();
-                messages.textContent += `Movement Remote: ${data}\n`;
-            } else if (data == "left") {
+            if (data == "left") {
                 left();
                 messages.textContent += `Movement Remote: ${data}\n`;
             } else if (data == "right") {
                 right();
                 messages.textContent += `Movement Remote: ${data}\n`;
+                // TODO: Add alert here?
             } else {
                 messages.textContent += `Remote: ${data}\n`;
             }
