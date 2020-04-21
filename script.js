@@ -323,9 +323,8 @@ $(function () {
     
     function removeAllRemoteVideos() {
         $('#videosContainer').empty();
-        // This brings back the localStream, but it's not muted
+        // This brings back the muted localStream
         addVideoMuted(localStream);
-        // setupGetUserMedia();
     }
 
     function setupMakeCallUI() {

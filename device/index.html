@@ -85,7 +85,7 @@
         <a class="navbar-brand col-5">
             <img style="height:100px" src="ELSA-logos_white.png">
         </a>
-        <h1 class="col-6" style="color:white">ELSA Remote Interface</h1>
+        <h1 class="col-6" style="color:white">ELSA Device Interface</h1>
         <span class="navbar-text col-1" id="clock" style="color:white"></span>
     </nav>
 
@@ -106,9 +106,9 @@
                 <button class="btn btn-secondary" id="host">Host Room</button>
                 <div id="hostLink" style="display:none">
                     <p>Send someone else this link:</p>
-                    <p id="copyLink">www.unoteam5.com?room=<span id="my-id">...</span></p>
-                    <!-- <button onclick="copyID()">Copy text</button>
-                    <p>Click on the button to copy the link.</p> -->
+                <p id="copyLink">www.unoteam5.com?room=<span id="my-id">...</span></p>
+                <!-- <button onclick="copyID()">Copy text</button>
+                <p>Click on the button to copy the link.</p> -->
                 </div>
             </div>
         </div>
@@ -123,14 +123,14 @@
         </div>
 
         <div class="row">
-            <div id="end-call">
+            <div class="col-12" id="end-call">
                 <p>Currently in room <span id="room-id">...</span></p>
                 <button class="btn btn-secondary" id="leave">Leave</button>
             </div>
         </div>
 
         <div class="row">
-            <div id="send-message">
+            <div class="col-12" id="send-message">
                 <p>
                     <!-- needs to be a pre so that it honors new line chars -->
                     <pre id="response"></pre>
@@ -139,14 +139,6 @@
                         type="button" id="send">Send</button>
                 </p>
             </div>
-        </div>
-
-        <!-- <button id='btnGiveCommand'>Give Command!</button> -->
-        <div class="row m-1">
-            <p>Voice Recognition Test</p>
-            <input id='chkSteve' type="checkbox"> Steve Rogers
-            <input id='chkTony' type="checkbox"> Tony Stark
-            <input id='emergency' type="checkbox"> ELSA Help
         </div>
 
         <!-- Voice recognition script -->
@@ -171,11 +163,7 @@
                 var command = event.results[last][0].transcript;
                 console.log('Voice Input: ' + command + '.');
 
-                if (command.toLowerCase() === 'steve' | command.toLowerCase() === ' steve') {
-                    document.querySelector('#chkSteve').checked = true;
-                } else if (command.toLowerCase() === 'tony' | command.toLowerCase() === ' tony') {
-                    document.querySelector('#chkTony').checked = true;
-                } else if (command.toLowerCase().includes('elsa') & command.toLowerCase().includes('help')){
+                if (command.toLowerCase().includes('elsa') & command.toLowerCase().includes('help')){
                     document.querySelector('#emergency').checked = true;
                     // MQTT alert function
                     elsaAlert();
@@ -192,43 +180,45 @@
         </script>
 
         <div class="row">
-            <button class="btn btn-primary" onclick="refreshSensors()">Refresh Sensors</button>
+            <div class="col-12">
+                <button class="btn btn-primary" onclick="refreshSensors()">Refresh Sensors</button>
 
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Field #</th>
-                        <th scope="col">Data</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td id="sensorArea1"></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td id="sensorArea2"></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td id="sensorArea3"></td>
-                    </tr>
-                </tbody>
-            </table>
-
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Field #</th>
+                            <th scope="col">Data</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td id="sensorArea1"></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td id="sensorArea2"></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td id="sensorArea3"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <div class="row">
-            <a href="../">Switch to Remote Monitor Interface</a>
+            <div class="col-6">
+                <a href="../">Switch to Remote Monitor Interface</a>
+            </div>
+            <div class="col-6">
+                <input type="checkbox" id="debugMode" onclick="debugCheck()">
+                <label for="debugMode">Debug Mode</label>
+            </div>
         </div>
 
-        <div class="row">
-            <input type="checkbox" id="debugMode" onclick="debugCheck()">
-            <label for="debugMode">Debug Mode</label>
-        </div>
-
-        <div class="row">
+        <div class="row" id="sources" style="display:none">
             <div class="col-12">
                 <label for="audioSource">Audio input source: </label><select id="audioSource"></select>
             </div>
