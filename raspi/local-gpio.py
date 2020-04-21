@@ -7,7 +7,9 @@ DIR = 20
 STEP = 21
 CW = 1
 CCW = 0
-SPR = 48
+# SPR = 48
+SPR = 6
+DELAY = 0.1
 
 def on_connect(client, userdata, flag, rc):
     print("Connected with result code "+str(rc))
@@ -22,17 +24,17 @@ def on_message(client, userdata, msg):
          GPIO.output(DIR, CW)
          for x in range(SPR):
             GPIO.output(STEP, 1)
-            time.sleep(0.01)
+            time.sleep(DELAY)
             GPIO.output(STEP, 0)
-            time.sleep(0.01)
+            time.sleep(DELAY)
          print("right")
      if msg.payload == "left":
          GPIO.output(DIR, CCW)
          for x in range(SPR):
             GPIO.output(STEP, 1)
-            time.sleep(0.01)
+            time.sleep(DELAY)
             GPIO.output(STEP, 0)
-            time.sleep(0.01)
+            time.sleep(DELAY)
          print("left")
      if msg.payload == "alert":
          # start talking to the SMTP server for Gmail
@@ -66,8 +68,6 @@ def on_disconnect():
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(21, GPIO.OUT)
 GPIO.setup(20, GPIO.OUT)
-GPIO.setup(16, GPIO.OUT)
-GPIO.setup(12, GPIO.OUT)
  
 client = mqtt.Client()
 client.on_connect = on_connect
