@@ -96,14 +96,14 @@
     </div>
 
     <div class="container" id="mainBody" style="display:none">
-        <div class="row" id="videosContainer">
+        <div class="row p-1" id="videosContainer">
             <div class="col-12">
                 <video id="myStream" autoplay muted="true"></video>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-12">
+        <div class="row p-1">
+            <div class="col-6">
                 <button class="btn btn-secondary" id="host">Host Room</button>
                 <div id="hostLink" style="display:none">
                     <p>Send someone else this link:</p>
@@ -112,9 +112,12 @@
                 <p>Click on the button to copy the link.</p> -->
                 </div>
             </div>
+            <div class="col-6">
+                <button class="btn btn-secondary" id="idSend">Send Request</button>
+            </div>
         </div>
 
-        <div class="row">
+        <div class="row p-1">
             <div class="col-12">
                 <form id="make-call">
                     <input type="text" placeholder="Join room..." id="join-room" size="50">
@@ -123,7 +126,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row p-1">
             <div class="col-12" id="end-call">
                 <p>Currently in room <span id="room-id">...</span></p>
                 <button class="btn btn-secondary" id="leave">Leave</button>
