@@ -169,7 +169,7 @@ $(function () {
         }
     });
 
-    $('#end-call').click(function () {
+    $('#leave').click(function () {
         existingCall.close();
         $('#host').show();
         $('#hostLink').hide();
