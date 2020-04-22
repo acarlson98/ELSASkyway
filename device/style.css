@@ -1,9 +1,9 @@
-.videosContainer {
-    position: absolute;
-    width: 50%;
-    height: 50%;
-    left: 0;
-    top: 100;
+#myStream {
+    -webkit-transform: rotate(90deg); /* Safari and Chrome */
+    -moz-transform: rotate(90deg);   /* Firefox */
+    -ms-transform: rotate(90deg);   /* IE 9 */
+    -o-transform: rotate(90deg);   /* Opera */
+    transform: rotate(90deg);
 }
 
 #my-id {
@@ -46,16 +46,16 @@ video {
 }
 
 /* These are affected by there being no videosContainer anymore */
-.videosContainer video {
+#videosContainer video {
     height: 100%;
 }
 
-.videosContainer video:first-child:nth-last-child(1),
-.videosContainer video:first-child:nth-last-child(1)~video {
+#videosContainer video:first-child:nth-last-child(1),
+#videosContainer video:first-child:nth-last-child(1)~video {
     width: 100%;
 }
 
-.videosContainer video:first-child:nth-last-child(2),
-.videosContainer video:first-child:nth-last-child(2)~video {
+#videosContainer video:first-child:nth-last-child(2),
+#videosContainer video:first-child:nth-last-child(2)~video {
     width: 50%;
 }

@@ -35,15 +35,6 @@ function checkTime(i) {
     return i;
 }
 
-// function copyID() {
-//     // var copyText = document.getElementById("copyLink");
-//     var copyText = "www.unoteam5.com?room=" + peer.id;
-//     copyText.select();
-//     copyText.setSelectionRange(0, 99999)
-//     document.execCommand("copy");
-//     alert("Copied the text: " + copyText.value);
-// }
-
 $(function () {
 
     let localStream = null;
@@ -306,6 +297,7 @@ $(function () {
     function addVideo(stream) {
         const videoDom = $('<video autoplay>');
         videoDom.attr('id', stream.peerId);
+        videoDom.style.transform = "rotate(90deg)";
         videoDom.get(0).srcObject = stream;
         $('#videosContainer').append(videoDom);
     }

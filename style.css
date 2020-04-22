@@ -1,11 +1,3 @@
-/* .videosContainer {
-    position: absolute;
-    width: 50%;
-    height: 50%;
-    left: 0;
-    top: 100;
-} */
-
 #my-id {
     font-weight: bold;
 }
@@ -46,16 +38,16 @@ video {
 }
 
 /* These are affected by there being no videosContainer anymore */
-.videosContainer video {
+#videosContainer video {
     height: 100%;
 }
 
-.videosContainer video:first-child:nth-last-child(1),
-.videosContainer video:first-child:nth-last-child(1)~video {
+#videosContainer video:first-child:nth-last-child(1),
+#videosContainer video:first-child:nth-last-child(1)~video {
     width: 100%;
 }
 
-.videosContainer video:first-child:nth-last-child(2),
-.videosContainer video:first-child:nth-last-child(2)~video {
+#videosContainer video:first-child:nth-last-child(2),
+#videosContainer video:first-child:nth-last-child(2)~video {
     width: 50%;
 }

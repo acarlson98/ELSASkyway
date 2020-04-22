@@ -305,6 +305,7 @@ $(function () {
     function addVideoMuted(stream) {
         const videoDom = $('<video autoplay muted="true">');
         videoDom.attr('id', stream.peerId);
+        videoDom.style.transform = "rotate(90deg)";
         videoDom.get(0).srcObject = stream;
         $('#videosContainer').append(videoDom);
     }
