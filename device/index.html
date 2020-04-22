@@ -68,7 +68,7 @@
         }
 
         function elsaAlert() {
-            message = new Paho.MQTT.Message("alert");
+            message = new Paho.MQTT.Message("alert " + roomID);
             message.destinationName = "isyjp/gpio21";
             // also need to send room ID
             mqtt.send(message);
@@ -113,7 +113,7 @@
                 </div>
             </div>
             <div class="col-6">
-                <button class="btn btn-secondary" id="idSend">Send Request</button>
+                <button class="btn btn-secondary" id="idSend" onclick="elsaAlert()">Send Request</button>
             </div>
         </div>
 

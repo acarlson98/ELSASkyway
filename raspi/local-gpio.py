@@ -37,6 +37,8 @@ def on_message(client, userdata, msg):
             time.sleep(DELAY)
          print("left")
      if msg.payload == "alert":
+         # Split the payload so that the id can be accessed later
+         delimit = msg.payload.split(" ")
          # start talking to the SMTP server for Gmail
          s = smtplib.SMTP('smtp.gmail.com', 587)
          s.starttls()
@@ -51,7 +53,7 @@ def on_message(client, userdata, msg):
          sendtoShow='me@me.com' # what shows on the email as send to
          subject='Alert from ELSA System' # subject line 
          # compose the email. probably should use the email python module
-         content="\nThe ELSA Emergency Notification System has been triggered\nFollow this link to observe.\nwww.unoteam5.com"
+         content="\nThe ELSA Emergency Notification System has been triggered\nFollow this link to observe.\nwww.unoteam5.com?room=" + delimit[1]
          mailtext='From: '+replyto+'\nTo: '+sendtoShow+'\n'
          mailtext=mailtext+'Subject:'+subject+'\n'+content
          # send the email
