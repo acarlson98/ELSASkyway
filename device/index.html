@@ -30,8 +30,8 @@
 </head>
 
 <!-- Voice recognition, time, and sensors -->
-<!-- <body onload="recognition.start();startTime();refreshSensors()"> -->
-<body onload="startTime();refreshSensors()">
+<body onload="recognition.start();startTime();refreshSensors()">
+<!-- <body onload="startTime();refreshSensors()"> -->
     <nav class="navbar navbar-expand-lg">
         <a class="navbar-brand col-5">
             <img style="height:100px" src="ELSA-logos_white.png">
@@ -48,7 +48,7 @@
     <div class="container" id="mainBody" style="display:none">
         <div class="row p-1" id="videosContainer">
             <div class="col-12">
-                <video id="myStream" autoplay muted="true"></video>
+                <!-- <video id="myStream" autoplay muted="true"></video> -->
             </div>
         </div>
 
@@ -117,8 +117,7 @@
                 console.log('Voice Input: ' + command + '.');
 
                 if (command.toLowerCase().includes('elsa') & command.toLowerCase().includes('help')){
-                    // MQTT alert function
-                    elsaAlert();
+                    document.getElementById("idSend").click();
                 }
             };
 

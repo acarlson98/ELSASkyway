@@ -1,9 +1,9 @@
 #myStream {
-    -webkit-transform: rotate(90deg); /* Safari and Chrome */
-    -moz-transform: rotate(90deg);   /* Firefox */
-    -ms-transform: rotate(90deg);   /* IE 9 */
-    -o-transform: rotate(90deg);   /* Opera */
-    transform: rotate(90deg);
+    -webkit-transform: rotate(270deg); /* Safari and Chrome */
+    -moz-transform: rotate(270deg);   /* Firefox */
+    -ms-transform: rotate(270deg);   /* IE 9 */
+    -o-transform: rotate(270deg);   /* Opera */
+    transform: rotate(270deg);
 }
 
 #my-id {
@@ -41,11 +41,10 @@ button:hover {
 }
 
 video {
-    background: black;
+    /* background: black; */
     float: left;
 }
 
-/* These are affected by there being no videosContainer anymore */
 #videosContainer video {
     height: 100%;
 }

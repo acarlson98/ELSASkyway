@@ -49,7 +49,6 @@ function debugCheck(){
 }
 
 var mqtt;
-// var peer;
 
 $(function () {
     mqtt = new Paho.MQTT.Client("localhost", 9090, "cli01");
@@ -93,7 +92,6 @@ function right() {
 }
 
 function elsaAlert(id) {
-    // Get the room id from somewhere
     message = new Paho.MQTT.Message(id);
     message.destinationName = "isyjp/alert";
     mqtt.send(message);
@@ -357,22 +355,12 @@ $(function () {
         $('#videosContainer').append(videoDom);
     }
 
-    function addVideoMuted(stream) {
-        const videoDom = $('<video autoplay muted="true">');
-        videoDom.attr('id', stream.peerId);
-        videoDom.style.transform = "rotate(90deg)";
-        videoDom.get(0).srcObject = stream;
-        $('#videosContainer').append(videoDom);
-    }
-
     function removeVideo(peerId) {
         $('#' + peerId).remove();
     }
     
     function removeAllRemoteVideos() {
         $('#videosContainer').empty();
-        // This brings back the muted localStream
-        addVideoMuted(localStream);
     }
 
     function setupMakeCallUI() {
