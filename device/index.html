@@ -24,57 +24,7 @@
 
     <!-- Script for communicating with local device MQTT server for movement instructions and alert notifications -->
     <script type="text/javascript">
-        var mqtt;
-
-        $(function () {
-            mqtt = new Paho.MQTT.Client("localhost", 9090, "cli01");
-            console.log("connecting");
-
-            var options = {
-                timeout: 60,
-                onSuccess: onConnect,
-                onFailure: onFailure,
-            };
-
-            mqtt.onMessageArrived = onMessageArrived;
-            mqtt.connect(options);
-        });
-
-        function onConnect() {
-            console.log("on Connect");
-            mqtt.subscribe("isyjp/tp01");
-        }
-
-        function onMessageArrived(msg) {
-            console.log("on Arrived");
-            console.log(msg.payloadString)
-            $('#message').text(msg.payloadString);
-        }
-
-        function onFailure() {}
-
-        function left() {
-            message = new Paho.MQTT.Message("left");
-            message.destinationName = "isyjp/gpio21";
-            mqtt.send(message);
-            console.log("left turn");
-        }
-
-        function right() {
-            message = new Paho.MQTT.Message("right");
-            message.destinationName = "isyjp/gpio21";
-            mqtt.send(message);
-            console.log("right turn");
-        }
-
-        function elsaAlert() {
-            message = new Paho.MQTT.Message("alert " + roomID);
-            message.destinationName = "isyjp/gpio21";
-            // also need to send room ID
-            mqtt.send(message);
-            console.log("alert sent");
-            alert("Alert has been sent to caretakers");
-        }
+        
     </script>
 
 </head>
@@ -113,7 +63,7 @@
                 </div>
             </div>
             <div class="col-6">
-                <button class="btn btn-secondary" id="idSend" onclick="elsaAlert()">Send Request</button>
+                <button class="btn btn-secondary" id="idSend">Send Alert</button>
             </div>
         </div>
 

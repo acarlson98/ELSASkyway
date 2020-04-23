@@ -48,12 +48,66 @@ function debugCheck(){
     }
 }
 
+var mqtt;
+// var peer;
+
+$(function () {
+    mqtt = new Paho.MQTT.Client("localhost", 9090, "cli01");
+    console.log("connecting");
+
+    var options = {
+        timeout: 60,
+        onSuccess: onConnect,
+        onFailure: onFailure,
+    };
+
+    mqtt.onMessageArrived = onMessageArrived;
+    mqtt.connect(options);
+});
+
+function onConnect() {
+    console.log("on Connect");
+    mqtt.subscribe("isyjp/tp01");
+}
+
+function onMessageArrived(msg) {
+    console.log("on Arrived");
+    console.log(msg.payloadString)
+    $('#message').text(msg.payloadString);
+}
+
+function onFailure() {}
+
+function left() {
+    message = new Paho.MQTT.Message("left");
+    message.destinationName = "isyjp/gpio21";
+    mqtt.send(message);
+    console.log("left turn");
+}
+
+function right() {
+    message = new Paho.MQTT.Message("right");
+    message.destinationName = "isyjp/gpio21";
+    mqtt.send(message);
+    console.log("right turn");
+}
+
+function elsaAlert(id) {
+    // Get the room id from somewhere
+    message = new Paho.MQTT.Message(id);
+    message.destinationName = "isyjp/alert";
+    mqtt.send(message);
+    console.log("alert sent");
+    alert("Alert has been sent to caretakers");
+}
+
 $(function () {
 
     let localStream = null;
     let peer = null;
     let existingCall = null;
     let connection = null;
+    // let alertTrigger = document.getElementById('idSend');
     let closeTrigger = document.getElementById('leave');
     let sendTrigger = document.getElementById('send');
     let localText = document.getElementById('message');
@@ -108,6 +162,11 @@ $(function () {
         $('#join-room').val(peer.id);
     });
 
+    // alertTrigger.addEventListener('click', elsaAlert());
+    $('#idSend').click(function () {
+        elsaAlert(peer.id);
+    })
+
     peer.on('error', function (err) {
         alert(err.message);
     });
@@ -141,9 +200,6 @@ $(function () {
             } else if (data == "right") {
                 right();
                 messages.textContent += `Movement Remote: ${data}\n`;
-            } else if (data == "alert") {
-                elsaAlert();
-                messages.textContent += `Alert Sent\n`;
             } else {
                 messages.textContent += `Remote: ${data}\n`;
             }
@@ -199,7 +255,6 @@ $(function () {
             } else if (data == "right") {
                 right();
                 messages.textContent += `Movement Remote: ${data}\n`;
-                // TODO: Add alert here?
             } else {
                 messages.textContent += `Remote: ${data}\n`;
             }
