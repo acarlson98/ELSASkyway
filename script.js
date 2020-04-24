@@ -289,7 +289,7 @@ $(function () {
     function addVideo(stream) {
         const videoDom = $('<video autoplay>');
         videoDom.attr('id', stream.peerId);
-        // videoDom.style.transform = "rotate(270deg)";
+        videoDom.attr('style', "transform: rotate(270deg);");
         videoDom.get(0).srcObject = stream;
         $('#videosContainer').append(videoDom);
     }
