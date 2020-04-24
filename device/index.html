@@ -31,7 +31,7 @@
 
 <!-- Voice recognition, time, and sensors -->
 <body onload="recognition.start();startTime();refreshSensors();window.setInterval(refreshSensors, 1000)">
-<!-- <body onload="startTime();refreshSensors()"> -->
+<!-- <body onload="startTime();refreshSensors();window.setInterval(refreshSensors, 1000)"> -->
     <nav class="navbar navbar-expand-lg">
         <a class="navbar-brand col-5">
             <img style="height:100px" src="ELSA-logos_white.png">
@@ -113,6 +113,7 @@
                 if (command.toLowerCase().includes('elsa') & command.toLowerCase().includes('help') |
                 command.toLowerCase().includes('elsa') & command.toLowerCase().includes('call')){
                     document.getElementById("idSend").click();
+                    // recognition.abort();
                 }
             };
 
@@ -162,6 +163,7 @@
         </div>
 
         <div class="row" id="sources" style="display:none">
+        <!-- <div class="row" id="sources"> -->
             <div class="col-12">
                 <label for="audioSource">Audio input source: </label><select id="audioSource"></select>
             </div>

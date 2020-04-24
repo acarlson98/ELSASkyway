@@ -157,11 +157,17 @@ $(function () {
 
     $('#idSend').click(function () {
         elsaAlert(peer.id);
-    })
+    });
 
     peer.on('error', function (err) {
         alert(err.message);
     });
+
+    // $('#faceContainer').click(function () {
+    //     $('#faceContainer').attr('style','display: none');
+    //     $('#mainBody').attr('style','display: block');
+    //     $('#make-call').submit();
+    // });
 
     // When 'Join' is clicked
     // Register connecter handler
@@ -225,6 +231,8 @@ $(function () {
 
     peer.on('open', function () {
         console.log('open: ' + peer.id);
+        // $("#select option:eq(2)").attr("selected", "selected");
+        // $('#audioSource :nth-child(2)').prop('selected', true);
         $('#my-id').text(peer.id);
         $('#join-room').val(peer.id);
         $('#make-call').submit();
