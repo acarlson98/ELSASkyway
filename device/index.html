@@ -53,10 +53,7 @@
         </div>
 
         <div class="row p-1">
-            <div class="col-6">
-                <p>Room Number: <span id="my-id">...</span></p>
-            </div>
-            <div class="col-6">
+            <div class="col-12">
                 <button class="btn btn-secondary float-right" id="idSend" style="background-color: red;">Send Alert</button>
             </div>
         </div>
@@ -84,9 +81,7 @@
                     <pre id="response"></pre>
                 </p>
             </div>
-                <!-- <p><input type="text" placeholder="Message" id="message" style="width:80%">&nbsp;<button class="btn btn-primary"
-                        type="button" id="send">Send</button>
-                </p> -->
+        </div>
 
         <!-- Voice recognition script -->
         <script>
@@ -126,6 +121,24 @@
             }
         </script>
 
+        <div class="row">
+            <div class="col-6">
+                <a href="../">Switch to Remote Monitor Interface</a>
+            </div>
+            <div class="col-6">
+                <input type="checkbox" id="debugMode" onclick="debugCheck()">
+                <label for="debugMode">Debug Mode</label>
+            </div>
+        </div>
+
+        <div class="row" id="sources" style="display:none">
+        <!-- <div class="row" id="sources"> -->
+            <div class="col-12">
+                <label for="audioSource">Audio input source: </label><select id="audioSource"></select>
+            </div>
+            <div class="col-12">
+                <label for="videoSource">Video source: </label><select id="videoSource"></select>
+            </div>
             <div class="col-12 p-1">
                 <table class="table">
                     <thead>
@@ -149,26 +162,6 @@
                         </tr>
                     </tbody>
                 </table>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-6">
-                <a href="../">Switch to Remote Monitor Interface</a>
-            </div>
-            <div class="col-6">
-                <input type="checkbox" id="debugMode" onclick="debugCheck()">
-                <label for="debugMode">Debug Mode</label>
-            </div>
-        </div>
-
-        <div class="row" id="sources" style="display:none">
-        <!-- <div class="row" id="sources"> -->
-            <div class="col-12">
-                <label for="audioSource">Audio input source: </label><select id="audioSource"></select>
-            </div>
-            <div class="col-12">
-                <label for="videoSource">Video source: </label><select id="videoSource"></select>
             </div>
         </div>
 

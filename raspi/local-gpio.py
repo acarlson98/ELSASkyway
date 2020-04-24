@@ -7,8 +7,8 @@ DIR = 20
 STEP = 21
 CW = 1
 CCW = 0
-SPR = 6
-DELAY = 0.1
+SPR = 12
+DELAY = 0.025
 
 def on_connect(client, userdata, flag, rc):
     print("Connected with result code "+str(rc))
@@ -20,7 +20,7 @@ def on_message(client, userdata, msg):
      GPIO.output(STEP,1)
 
      if msg.payload == "right":
-         GPIO.output(DIR, CW)
+         GPIO.output(DIR, CCW)
          for x in range(SPR):
             GPIO.output(STEP, 1)
             time.sleep(DELAY)
@@ -28,7 +28,7 @@ def on_message(client, userdata, msg):
             time.sleep(DELAY)
          print("right")
      if msg.payload == "left":
-         GPIO.output(DIR, CCW)
+         GPIO.output(DIR, CW)
          for x in range(SPR):
             GPIO.output(STEP, 1)
             time.sleep(DELAY)

@@ -45,16 +45,14 @@ video {
     float: left;
 }
 
-/* #videosContainer video {
-    height: 100%;
+p {
+    font-size: 50px;
 }
 
-#videosContainer video:first-child:nth-last-child(1),
-#videosContainer video:first-child:nth-last-child(1)~video {
-    width: 100%;
+button {
+    font-size: 50px !important;
 }
 
-#videosContainer video:first-child:nth-last-child(2),
-#videosContainer video:first-child:nth-last-child(2)~video {
-    width: 50%;
-} */
+pre {
+    font-size: 50px;
+}

@@ -354,6 +354,7 @@ $(function () {
     function addVideo(stream) {
         const videoDom = $('<video autoplay>');
         videoDom.attr('id', stream.peerId);
+        videoDom.attr('style', 'width: 100%');
         videoDom.get(0).srcObject = stream;
         $('#videosContainer').append(videoDom);
     }
