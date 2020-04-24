@@ -1,5 +1,5 @@
 // var feedURL = "https://api.thingspeak.com/channels/1012790/feeds.json?api_key=UAVE2ZYBLZS5LT6S&results=2";
-var feedURL = "https://api.thingspeak.com/channels/985815/fields/1.json?results=2";
+var feedURL = "https://api.thingspeak.com/channels/985815/feeds.json?results=2";
 
 function refreshSensors() {
     fetch(feedURL)
@@ -10,12 +10,13 @@ function refreshSensors() {
             // console.log("feed");
             // console.log(myJson);
 
-            var feedStream = myJson.feeds[0];
+            var feedStream = myJson.feeds[1];
             // BPM
             document.getElementById("sensorArea1").textContent = feedStream.field1;
-            // Oxygen
-            // document.getElementById("sensorArea2").textContent = feedStream.field2;
-            // document.getElementById("sensorArea3").textContent = feedStream.field3;
+            // Temperature
+            document.getElementById("sensorArea2").textContent = feedStream.field2;
+            // Humidity
+            document.getElementById("sensorArea3").textContent = feedStream.field3;
         });
 }
 
