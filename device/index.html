@@ -47,21 +47,17 @@
 
     <div class="container" id="mainBody" style="display:none">
         <div class="row p-1">
-            <div class="col-12" id="videosContainer">
-                <video id="myStream" autoplay muted="true"></video>
+            <div class="col-12 mt-5 mb-5" id="videosContainer">
+                <video id="myStream" autoplay muted="true" style="width: 50%;"></video>
             </div>
         </div>
 
         <div class="row p-1">
             <div class="col-6">
-                <button class="btn btn-secondary" id="host">Host Room</button>
-                <div id="hostLink" style="display:none">
-                    <p>Send someone else this link:</p>
-                    <p id="copyLink">www.unoteam5.com?room=<span id="my-id">...</span></p>
-                </div>
+                <p>Room Number: <span id="my-id">...</span></p>
             </div>
             <div class="col-6">
-                <button class="btn btn-secondary" id="idSend">Send Alert</button>
+                <button class="btn btn-secondary float-right" id="idSend" style="background-color: red;">Send Alert</button>
             </div>
         </div>
 
@@ -82,15 +78,15 @@
         </div>
 
         <div class="row">
-            <div class="col-8" id="send-message">
+            <div class="col-12" id="send-message">
                 <p>
-                    <!-- needs to be a pre so that it honors new line chars -->
+                    Incoming Messages:
                     <pre id="response"></pre>
                 </p>
-                <p><input type="text" placeholder="Message" id="message" style="width:80%">&nbsp;<button class="btn btn-primary"
-                        type="button" id="send">Send</button>
-                </p>
             </div>
+                <!-- <p><input type="text" placeholder="Message" id="message" style="width:80%">&nbsp;<button class="btn btn-primary"
+                        type="button" id="send">Send</button>
+                </p> -->
 
         <!-- Voice recognition script -->
         <script>
@@ -114,7 +110,8 @@
                 var command = event.results[last][0].transcript;
                 console.log('Voice Input: ' + command + '.');
 
-                if (command.toLowerCase().includes('elsa') & command.toLowerCase().includes('help')){
+                if (command.toLowerCase().includes('elsa') & command.toLowerCase().includes('help') |
+                command.toLowerCase().includes('elsa') & command.toLowerCase().includes('call')){
                     document.getElementById("idSend").click();
                 }
             };
@@ -128,7 +125,7 @@
             }
         </script>
 
-            <div class="col-md-4 p-1">
+            <div class="col-12 p-1">
                 <table class="table">
                     <thead>
                         <tr>

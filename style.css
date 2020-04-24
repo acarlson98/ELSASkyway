@@ -2,6 +2,10 @@
     font-weight: bold;
 }
 
+#myStream {
+    width: 25%;
+}
+
 #end-call {
     display: none;
 }
@@ -38,7 +42,7 @@ video {
 }
 
 /* These are affected by there being no videosContainer anymore */
-#videosContainer video {
+/* #videosContainer video {
     height: 100%;
 }
 
@@ -50,4 +54,4 @@ video {
 #videosContainer video:first-child:nth-last-child(2),
 #videosContainer video:first-child:nth-last-child(2)~video {
     width: 50%;
-}
+} */

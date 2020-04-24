@@ -109,7 +109,6 @@ $(function () {
     let peer = null;
     let existingCall = null;
     let connection = null;
-    // let alertTrigger = document.getElementById('idSend');
     let closeTrigger = document.getElementById('leave');
     let sendTrigger = document.getElementById('send');
     let localText = document.getElementById('message');
@@ -156,15 +155,6 @@ $(function () {
         debug: 3
     });
 
-    // When host button is clicked
-    $('#host').click(function () {
-        $('#host').hide();
-        $('#hostLink').show();
-        $('#my-id').text(peer.id);
-        $('#join-room').val(peer.id);
-    });
-
-    // alertTrigger.addEventListener('click', elsaAlert());
     $('#idSend').click(function () {
         elsaAlert(peer.id);
     })
@@ -198,10 +188,10 @@ $(function () {
             console.log(data);
             if (data == "left") {
                 left();
-                messages.textContent += `Movement Remote: ${data}\n`;
+                // messages.textContent += `Movement Remote: ${data}\n`;
             } else if (data == "right") {
                 right();
-                messages.textContent += `Movement Remote: ${data}\n`;
+                // messages.textContent += `Movement Remote: ${data}\n`;
             } else {
                 messages.textContent += `Remote: ${data}\n`;
             }
@@ -235,8 +225,9 @@ $(function () {
 
     peer.on('open', function () {
         console.log('open: ' + peer.id);
-        console.log('from URL: ' + URLroom);
-        $('#join-room').val(URLroom);
+        $('#my-id').text(peer.id);
+        $('#join-room').val(peer.id);
+        $('#make-call').submit();
     });
 
     // Register connected peer handler
