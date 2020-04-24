@@ -1,4 +1,5 @@
-var feedURL = "https://api.thingspeak.com/channels/1012790/feeds.json?api_key=UAVE2ZYBLZS5LT6S&results=2";
+// var feedURL = "https://api.thingspeak.com/channels/1012790/feeds.json?api_key=UAVE2ZYBLZS5LT6S&results=2";
+var feedURL = "https://api.thingspeak.com/channels/985815/fields/1.json?results=2";
 
 function refreshSensors() {
     fetch(feedURL)
@@ -6,13 +7,15 @@ function refreshSensors() {
             return response.json();
         })
         .then((myJson) => {
-            console.log("feed");
-            console.log(myJson);
+            // console.log("feed");
+            // console.log(myJson);
 
             var feedStream = myJson.feeds[0];
+            // BPM
             document.getElementById("sensorArea1").textContent = feedStream.field1;
-            document.getElementById("sensorArea2").textContent = feedStream.field2;
-            document.getElementById("sensorArea3").textContent = feedStream.field3;
+            // Oxygen Level
+            // document.getElementById("sensorArea2").textContent = feedStream.field2;
+            // document.getElementById("sensorArea3").textContent = feedStream.field3;
         });
 }
 
@@ -50,7 +53,6 @@ $(function () {
     let audioSelect = $('#audioSource');
     let videoSelect = $('#videoSource');
 
-
     navigator.mediaDevices.enumerateDevices()
         .then(function (deviceInfos) {
             for (let i = 0; i !== deviceInfos.length; ++i) {
@@ -87,14 +89,6 @@ $(function () {
     peer = new Peer({
         key: '7df85c95-5208-405f-95a4-bd5e1f566321',
         debug: 3
-    });
-
-    // When host button is clicked
-    $('#host').click(function () {
-        $('#host').hide();
-        $('#hostLink').show();
-        $('#my-id').text(peer.id);
-        $('#join-room').val(peer.id);
     });
 
     peer.on('error', function (err) {
@@ -168,8 +162,6 @@ $(function () {
 
     $('#leave').click(function () {
         existingCall.close();
-        $('#host').show();
-        $('#hostLink').hide();
     });
 
     peer.on('open', function () {
@@ -297,7 +289,7 @@ $(function () {
     function addVideo(stream) {
         const videoDom = $('<video autoplay>');
         videoDom.attr('id', stream.peerId);
-        videoDom.style.transform = "rotate(90deg)";
+        // videoDom.style.transform = "rotate(270deg)";
         videoDom.get(0).srcObject = stream;
         $('#videosContainer').append(videoDom);
     }

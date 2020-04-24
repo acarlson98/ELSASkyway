@@ -24,12 +24,12 @@
 
 </head>
 
-<body onload="startTime();refreshSensors()">
+<body onload="startTime();refreshSensors();window.setInterval(refreshSensors, 1000)">
     <nav class="navbar navbar-expand-lg">
         <a class="navbar-brand col-5">
             <img style="height:100px" src="ELSA-logos_white.png">
         </a>
-        <h1 class="col-6" style="color:white">Remote Monitor Interface</h1>
+        <h1 class="col-6" style="color:white">Remote Interface</h1>
         <span class="navbar-text col-1" id="clock" style="color:white"></span>
     </nav>
 
@@ -37,18 +37,6 @@
         <div class="row p-1">
             <div class="col-12" id="videosContainer">
                 <video id="myStream" autoplay muted="true"></video>
-            </div>
-        </div>
-
-        <div class="row p-1">
-            <div class="col-12">
-                <button class="btn btn-secondary" id="host">Host Room</button>
-                <div id="hostLink" style="display:none">
-                    <p>Send someone else this link:</p>
-                    <p id="copyLink">www.unoteam5.com?room=<span id="my-id">...</span></p>
-                    <!-- <button onclick="copyID()">Copy text</button>
-                    <p>Click on the button to copy the link.</p> -->
-                </div>
             </div>
         </div>
 
@@ -82,27 +70,17 @@
             </div>
 
             <div class="col-md-4 p-1">
-                <button class="btn btn-primary" onclick="refreshSensors()">Refresh Sensors</button>
-
                 <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col">Field #</th>
+                            <th scope="col">Field</th>
                             <th scope="col">Data</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <th scope="row">1</th>
+                            <th scope="row">BPM</th>
                             <td id="sensorArea1"></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td id="sensorArea2"></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td id="sensorArea3"></td>
                         </tr>
                     </tbody>
                 </table>
