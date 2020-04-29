@@ -1,9 +1,13 @@
-#my-id {
-    font-weight: bold;
+#myStream {
+    -webkit-transform: rotate(270deg); /* Safari and Chrome */
+    -moz-transform: rotate(270deg);   /* Firefox */
+    -ms-transform: rotate(270deg);   /* IE 9 */
+    -o-transform: rotate(270deg);   /* Opera */
+    transform: rotate(270deg);
 }
 
-#myStream {
-    width: 25%;
+#my-id {
+    font-weight: bold;
 }
 
 #end-call {
@@ -37,21 +41,18 @@ button:hover {
 }
 
 video {
-    background: black;
+    /* background: black; */
     float: left;
 }
 
-/* These are affected by there being no videosContainer anymore */
-/* #videosContainer video {
-    height: 100%;
+p {
+    font-size: 50px;
 }
 
-#videosContainer video:first-child:nth-last-child(1),
-#videosContainer video:first-child:nth-last-child(1)~video {
-    width: 100%;
+button {
+    font-size: 50px !important;
 }
 
-#videosContainer video:first-child:nth-last-child(2),
-#videosContainer video:first-child:nth-last-child(2)~video {
-    width: 50%;
-} */
+pre {
+    font-size: 50px;
+}

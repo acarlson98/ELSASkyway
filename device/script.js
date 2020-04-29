@@ -20,6 +20,11 @@ function refreshSensors() {
         });
 }
 
+function removeFace() {
+    document.getElementById('faceContainer').style.display = 'none';
+    document.getElementById('mainBody').style.display = 'block';
+}
+
 function startTime() {
     var today = new Date();
     var h = today.getHours();
@@ -39,6 +44,65 @@ function checkTime(i) {
     return i;
 }
 
+function debugCheck(){
+    if(document.getElementById("debugMode").checked) {
+        document.getElementById("sources").style.display = "block";
+    } else {
+        document.getElementById("sources").style.display = "none";
+    }
+}
+
+var mqtt;
+
+$(function () {
+    mqtt = new Paho.MQTT.Client("localhost", 9090, "cli01");
+    console.log("connecting");
+
+    var options = {
+        timeout: 60,
+        onSuccess: onConnect,
+        onFailure: onFailure,
+    };
+
+    mqtt.onMessageArrived = onMessageArrived;
+    mqtt.connect(options);
+});
+
+function onConnect() {
+    console.log("on Connect");
+    mqtt.subscribe("isyjp/tp01");
+}
+
+function onMessageArrived(msg) {
+    console.log("on Arrived");
+    console.log(msg.payloadString)
+    $('#message').text(msg.payloadString);
+}
+
+function onFailure() {}
+
+function left() {
+    message = new Paho.MQTT.Message("left");
+    message.destinationName = "isyjp/gpio21";
+    mqtt.send(message);
+    console.log("left turn");
+}
+
+function right() {
+    message = new Paho.MQTT.Message("right");
+    message.destinationName = "isyjp/gpio21";
+    mqtt.send(message);
+    console.log("right turn");
+}
+
+function elsaAlert(id) {
+    message = new Paho.MQTT.Message(id);
+    message.destinationName = "isyjp/alert";
+    mqtt.send(message);
+    console.log("alert sent");
+    alert("Alert has been sent to caretakers");
+}
+
 $(function () {
 
     let localStream = null;
@@ -47,12 +111,11 @@ $(function () {
     let connection = null;
     let closeTrigger = document.getElementById('leave');
     let sendTrigger = document.getElementById('send');
-    let leftTrigger = document.getElementById('left');
-    let rightTrigger = document.getElementById('right');
     let localText = document.getElementById('message');
     let messages = document.getElementById('response');
     let audioSelect = $('#audioSource');
     let videoSelect = $('#videoSource');
+
 
     navigator.mediaDevices.enumerateDevices()
         .then(function (deviceInfos) {
@@ -92,9 +155,19 @@ $(function () {
         debug: 3
     });
 
+    $('#idSend').click(function () {
+        elsaAlert(peer.id);
+    });
+
     peer.on('error', function (err) {
         alert(err.message);
     });
+
+    // $('#faceContainer').click(function () {
+    //     $('#faceContainer').attr('style','display: none');
+    //     $('#mainBody').attr('style','display: block');
+    //     $('#make-call').submit();
+    // });
 
     // When 'Join' is clicked
     // Register connecter handler
@@ -114,21 +187,25 @@ $(function () {
         connection.once('open', async () => {
             messages.textContent += `=== DataConnection has been opened ===\n`;
             sendTrigger.addEventListener('click', onClickSend);
-            leftTrigger.addEventListener('click', onClickLeft);
-            rightTrigger.addEventListener('click', onClickRight);
         });
 
         connection.on('data', data => {
             console.log("Self Handler: ");
             console.log(data);
-            messages.textContent += `Remote: ${data}\n`;
+            if (data == "left") {
+                left();
+                // messages.textContent += `Movement Remote: ${data}\n`;
+            } else if (data == "right") {
+                right();
+                // messages.textContent += `Movement Remote: ${data}\n`;
+            } else {
+                messages.textContent += `Remote: ${data}\n`;
+            }
         });
 
         connection.once('close', () => {
             messages.textContent += `=== DataConnection has been closed ===\n`;
             sendTrigger.removeEventListener('click', onClickSend);
-            leftTrigger.removeEventListener('click', onClickLeft);
-            rightTrigger.removeEventListener('click', onClickRight);
         });
 
         // Register closing handler
@@ -144,31 +221,21 @@ $(function () {
             messages.textContent += `You: ${data}\n`;
             localText.value = '';
         }
-
-        // Movement buttons
-        function onClickLeft() {
-            const data = 'left';
-            console.log(data);
-            connection.send(data);
-            messages.textContent += `You: ${data}\n`;
-        }
-
-        function onClickRight() {
-            const data = 'right';
-            console.log(data);
-            connection.send(data);
-            messages.textContent += `You: ${data}\n`;
-        }
     });
 
     $('#leave').click(function () {
         existingCall.close();
+        $('#host').show();
+        $('#hostLink').hide();
     });
 
     peer.on('open', function () {
         console.log('open: ' + peer.id);
-        console.log('from URL: ' + URLroom);
-        $('#join-room').val(URLroom);
+        // $("#select option:eq(2)").attr("selected", "selected");
+        // $('#audioSource :nth-child(2)').prop('selected', true);
+        $('#my-id').text(peer.id);
+        $('#join-room').val(peer.id);
+        $('#make-call').submit();
     });
 
     // Register connected peer handler
@@ -178,21 +245,25 @@ $(function () {
         connection.once('open', async () => {
             messages.textContent += `=== DataConnection has been opened ===\n`;
             sendTrigger.addEventListener('click', onClickSend);
-            leftTrigger.addEventListener('click', onClickLeft);
-            rightTrigger.addEventListener('click', onClickRight);
         });
 
         connection.on('data', data => {
             console.log("Peer Handler: ");
             console.log(data);
-            messages.textContent += `Remote: ${data}\n`;
+            if (data == "left") {
+                left();
+                messages.textContent += `Movement Remote: ${data}\n`;
+            } else if (data == "right") {
+                right();
+                messages.textContent += `Movement Remote: ${data}\n`;
+            } else {
+                messages.textContent += `Remote: ${data}\n`;
+            }
         });
 
         connection.once('close', () => {
             messages.textContent += `=== DataConnection has been closed ===\n`;
             sendTrigger.removeEventListener('click', onClickSend);
-            leftTrigger.removeEventListener('click', onClickLeft);
-            rightTrigger.removeEventListener('click', onClickRight);
         });
 
         // Register closing handler
@@ -208,29 +279,22 @@ $(function () {
             messages.textContent += `You: ${data}\n`;
             localText.value = '';
         }
-
-        // Movement buttons
-        function onClickLeft() {
-            const data = 'left';
-            console.log(data);
-            connection.send(data);
-            messages.textContent += `You: ${data}\n`;
-        }
-
-        function onClickRight() {
-            const data = 'right';
-            console.log(data);
-            connection.send(data);
-            messages.textContent += `You: ${data}\n`;
-        }
     });
 
     function setupGetUserMedia() {
         let audioSource = $('#audioSource').val();
         let videoSource = $('#videoSource').val();
         let constraints = {
-            audio: {deviceId: {exact: audioSource}},
-            video: {deviceId: {exact: videoSource}}
+            audio: {
+                deviceId: {
+                    exact: audioSource
+                }
+            },
+            video: {
+                deviceId: {
+                    exact: videoSource
+                }
+            }
         };
         constraints.video.width = {
             min: 320,
@@ -290,14 +354,7 @@ $(function () {
     function addVideo(stream) {
         const videoDom = $('<video autoplay>');
         videoDom.attr('id', stream.peerId);
-        videoDom.attr('style', "transform: rotate(270deg);");
-        videoDom.get(0).srcObject = stream;
-        $('#videosContainer').append(videoDom);
-    }
-
-    function addVideoMuted(stream) {
-        const videoDom = $('<video autoplay muted="true">');
-        videoDom.attr('id', stream.peerId);
+        videoDom.attr('style', 'width: 100%');
         videoDom.get(0).srcObject = stream;
         $('#videosContainer').append(videoDom);
     }
@@ -308,8 +365,6 @@ $(function () {
     
     function removeAllRemoteVideos() {
         $('#videosContainer').empty();
-        // This brings back the muted localStream
-        addVideoMuted(localStream);
     }
 
     function setupMakeCallUI() {

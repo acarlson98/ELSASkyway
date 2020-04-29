@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>ELSA Local Device Interface</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js" type="text/javascript"></script>
+    <script type="text/javascript" src="https://cdn.webrtc.ecl.ntt.com/skyway-latest.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+    <script type="text/javascript" src="script.js"></script>
+
+    <!-- Bundled Bootstrap (includes Popper) -->
+    <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js">
+    </script>
+
+    <!-- Script for communicating with local device MQTT server for movement instructions and alert notifications -->
+    <script type="text/javascript">
+        
+    </script>
+
+</head>
+
+<!-- Voice recognition, time, and sensors -->
+<body onload="recognition.start();startTime();refreshSensors();window.setInterval(refreshSensors, 1000)">
+<!-- <body onload="startTime();refreshSensors();window.setInterval(refreshSensors, 1000)"> -->
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand col-5">
+            <img style="height:100px" src="ELSA-logos_white.png">
+        </a>
+        <h1 class="col-6" style="color:white">Device Interface</h1>
+        <span class="navbar-text col-1" id="clock" style="color:white"></span>
+    </nav>
+
+    <div class="container" id="faceContainer">
+        <!-- Happy face for when device is idling -->
+        <image src="ELSAFace.png" id="face" style="width:100%" onclick="removeFace()"></image>
+    </div>
+
+    <div class="container" id="mainBody" style="display:none">
+        <div class="row p-1">
+            <div class="col-12 mt-5 mb-5" id="videosContainer">
+                <video id="myStream" autoplay muted="true" style="width: 50%;"></video>
+            </div>
+        </div>
+
+        <div class="row p-1">
+            <div class="col-12">
+                <button class="btn btn-secondary float-right" id="idSend" style="background-color: red;">Send Alert</button>
+            </div>
+        </div>
+
+        <div class="row p-1">
+            <div class="col-12">
+                <form id="make-call">
+                    <input type="text" placeholder="Join room..." id="join-room" size="50">
+                    <button class="btn btn-primary" type="submit">Join</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="row p-1">
+            <div class="col-12" id="end-call">
+                <p>Currently in room <span id="room-id">...</span></p>
+                <button class="btn btn-secondary" id="leave">Leave</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12" id="send-message">
+                <p>
+                    Incoming Messages:
+                    <pre id="response"></pre>
+                </p>
+            </div>
+        </div>
+
+        <!-- Voice recognition script -->
+        <script>
+            var message = document.querySelector('#message');
+
+            var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+            var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList;
+
+            var grammar = '#JSGF V1.0;'
+
+            var recognition = new SpeechRecognition();
+            var speechRecognitionList = new SpeechGrammarList();
+            speechRecognitionList.addFromString(grammar, 1);
+            recognition.grammars = speechRecognitionList;
+            recognition.lang = 'en-US';
+            recognition.interimResults = false;
+            recognition.continuous = true;
+
+            recognition.onresult = function (event) {
+                var last = event.results.length - 1;
+                var command = event.results[last][0].transcript;
+                console.log('Voice Input: ' + command + '.');
+
+                if (command.toLowerCase().includes('elsa') & command.toLowerCase().includes('help') |
+                command.toLowerCase().includes('elsa') & command.toLowerCase().includes('call')){
+                    document.getElementById("idSend").click();
+                    // recognition.abort();
+                }
+            };
+
+            recognition.onspeechend = function () {
+                recognition.stop();
+            };
+
+            recognition.onerror = function (event) {
+                console.log('Error occurred in recognition: ' + event.error);
+            }
+        </script>
+
+        <div class="row">
+            <div class="col-6">
+                <a href="../">Switch to Remote Monitor Interface</a>
+            </div>
+            <div class="col-6">
+                <input type="checkbox" id="debugMode" onclick="debugCheck()">
+                <label for="debugMode">Debug Mode</label>
+            </div>
+        </div>
+
+        <div class="row" id="sources" style="display:none">
+        <!-- <div class="row" id="sources"> -->
+            <div class="col-12">
+                <label for="audioSource">Audio input source: </label><select id="audioSource"></select>
+            </div>
+            <div class="col-12">
+                <label for="videoSource">Video source: </label><select id="videoSource"></select>
+            </div>
+            <div class="col-12 p-1">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Field</th>
+                            <th scope="col">Data</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">BPM</th>
+                            <td id="sensorArea1"></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Temperature</th>
+                            <td id="sensorArea2"></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Humidity</th>
+                            <td id="sensorArea3"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+</body>
+
+</html>
