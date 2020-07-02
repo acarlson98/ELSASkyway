@@ -13,13 +13,15 @@ def on_message(client, userdata, msg):
      s.starttls()
      s.ehlo()
      # now login as my gmail user
+     # this password has been disabled for my account security,
+     # but you can make a google app password for the gmail account that will send the email and put it here
      username='acarlson98@gmail.com'
      password='uygsxbulxmzwlwvm'
      s.login(username,password)
      print("Login Done")
      # the email objects
      replyto='elsa.unoteam5@gmail.com' # where a reply to will go
-     sendto=['4022535372@vtext.com'] # list to send to
+     sendto=['1234567890@vtext.com'] # email address to send to (this currently sends a text to the verizon number (123)456-7890)
      sendtoShow='me@me.com' # what shows on the email as send to
      subject='Alert from ELSA System' # subject line 
      # compose the email. probably should use the email python module
